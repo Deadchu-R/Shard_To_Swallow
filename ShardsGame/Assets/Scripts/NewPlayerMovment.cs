@@ -2,13 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IsometricCharacterMovement : MonoBehaviour
+public class NewPlayerMovement : MonoBehaviour
 {
     public float horizontalMoveSpeed = 5f;
     public float verticalMoveSpeed = 3f;
+    public List<GameObject> colliders;
+    public int _kickForce;
 
     private void Update()
     {
+        MovePlayer();
+    }
+
+    private void MovePlayer()
+    {
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -33,4 +41,17 @@ public class IsometricCharacterMovement : MonoBehaviour
             transform.Translate(moveDirection * speed * Time.deltaTime);
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Enemy")
+        {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+
+            }
+        }
+    }
+
+
 }
