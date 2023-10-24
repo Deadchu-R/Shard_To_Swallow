@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IsometricCharacterMovement : MonoBehaviour
+public class PlayerMovment : MonoBehaviour
 {
     public float moveSpeed = 5f;
 
