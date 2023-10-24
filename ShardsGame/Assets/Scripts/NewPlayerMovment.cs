@@ -6,15 +6,21 @@ public class NewPlayerMovement : MonoBehaviour
 {
     public float horizontalMoveSpeed = 5f;
     public float verticalMoveSpeed = 3f;
-    public List<GameObject> colliders;
-    public int _kickForce;
+    public float kickForce = 0.1f;
+    public float kickDragRadius = 1.0f;
+    private bool isHolding = false;
+    private Vector3 playerPosition;
 
     private void Update()
     {
         MovePlayer();
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Kick();
+        }
     }
 
-    private void MovePlayer()
+    void MovePlayer()
     {
 
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -42,16 +48,22 @@ public class NewPlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    void Kick()
     {
-        if (other.tag == "Enemy")
-        {
-            if (Input.GetKeyDown(KeyCode.X))
-            {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, kickDragRadius);
 
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                Rigidbody rb = collider.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    Vector3 kickDirection = (collider.transform.position - transform.position).normalized;
+
+                    rb.AddForce(kickDirection * kickForce, ForceMode.Impulse);
+                }
             }
         }
     }
-
-
 }
