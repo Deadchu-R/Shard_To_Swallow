@@ -2,13 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IsometricCharacterMovement : MonoBehaviour
+public class NewPlayerMovement : MonoBehaviour
 {
     public float horizontalMoveSpeed = 5f;
     public float verticalMoveSpeed = 3f;
+    public float kickForce = 0.1f;
+    public float kickDragRadius = 1.0f;
+    private bool isHolding = false;
+    private Vector3 playerPosition;
 
     private void Update()
     {
+        MovePlayer();
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Kick();
+        }
+    }
+
+    void MovePlayer()
+    {
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -31,6 +45,25 @@ public class IsometricCharacterMovement : MonoBehaviour
             float speed = inputDirection.x != 0 ? horizontalMoveSpeed : verticalMoveSpeed;
 
             transform.Translate(moveDirection * speed * Time.deltaTime);
+        }
+    }
+
+    void Kick()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, kickDragRadius);
+
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.CompareTag("Enemy"))
+            {
+                Rigidbody rb = collider.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    Vector3 kickDirection = (collider.transform.position - transform.position).normalized;
+
+                    rb.AddForce(kickDirection * kickForce, ForceMode.Impulse);
+                }
+            }
         }
     }
 }
