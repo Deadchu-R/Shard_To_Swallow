@@ -8,8 +8,6 @@ public class NewPlayerMovement : MonoBehaviour
     public float verticalMoveSpeed = 3f;
     public float kickForce = 0.1f;
     public float kickDragRadius = 1.0f;
-    private bool isHolding = false;
-    private Vector3 playerPosition;
 
     private void Update()
     {
