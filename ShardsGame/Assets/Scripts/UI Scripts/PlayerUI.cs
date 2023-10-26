@@ -17,6 +17,7 @@ public class PlayerUI : MonoBehaviour
     public void SetQuestionText(string text)
     {
         _questionText.text = text;
+        _questionText.gameObject.SetActive(true);
     }
     public void UpdateHealthText(int health)
     {

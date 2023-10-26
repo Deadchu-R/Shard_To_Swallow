@@ -6,6 +6,7 @@ public class UI_Manager : MonoBehaviour
 {
    
  [SerializeField] private GameObject[] Panels;
+ [SerializeField] private PlayerUI _playerUIScript;
    
     public void ClosePanel(int PanelID)
     {
@@ -15,5 +16,11 @@ public class UI_Manager : MonoBehaviour
     public void OpenPanel(int PanelID)
     {
         Panels[PanelID].SetActive(true);
+    }
+
+    public void SetPlayerUIQuestionText(string text)
+    {
+        Debug.Log(text);
+       _playerUIScript.SetQuestionText(text);
     }
 }
