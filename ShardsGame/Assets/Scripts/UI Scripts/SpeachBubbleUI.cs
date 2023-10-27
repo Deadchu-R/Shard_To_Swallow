@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,9 @@ public class SpeachBubbleUI : MonoBehaviour
    [SerializeField] private Button backButton;
    [SerializeField] private Button nextButton;
    [SerializeField] private TextMeshProUGUI speechText;
-   [SerializeField] private UI_Manager uiManager; 
+   [SerializeField] private UI_Manager uiManager;
+   [SerializeField] private Image NPCIcon;
+   [SerializeField] private TextMeshProUGUI NPCName;
    private bool shouldEnableQuestionText = false;
    private string[] texts;
    private string questionText;
@@ -28,7 +31,12 @@ public class SpeachBubbleUI : MonoBehaviour
       nextButton.gameObject.SetActive(true);
       backButton.interactable = false;
       nextButton.onClick.AddListener(NextPage);
-      
+   }
+
+   public void SetNPCInfo(Sprite NPCIcon, string NPCName)
+   {
+      this.NPCIcon.sprite = NPCIcon;
+      this.NPCName.text = NPCName;
    }
 
    public void SetLevelMove(int levelNumber, bool shouldMoveToLevel)
