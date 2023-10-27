@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Tile
   - Shard
+  - EnemyTileChanger
+  - A
   layers:
   - Default
   - TransparentFX
@@ -14,9 +16,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - PlayerPushable
+  - FloorInteractable
+  - NonInteractable
   - 
   - 
   - 
@@ -46,4 +48,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: New Layer 2
+    uniqueID: 3703251145
     locked: 0
