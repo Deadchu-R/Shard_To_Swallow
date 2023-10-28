@@ -24,10 +24,10 @@ public class FourDirectionalMovement : MonoBehaviour
 
     private void Walk()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxis("Vertical");
+        float verticalInput = Input.GetAxis("Horizontal");
 
-        Vector3 inputDirection = new Vector3(horizontalInput, 0, verticalInput).normalized;
+        Vector3 inputDirection = new Vector3(horizontalInput, 0, verticalInput * -1).normalized;
 
         if (inputDirection.magnitude > 0)
         {

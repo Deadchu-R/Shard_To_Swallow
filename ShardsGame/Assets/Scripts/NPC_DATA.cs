@@ -18,14 +18,16 @@ public class NPC_DATA : MonoBehaviour
   [SerializeField] private Sprite NPCIcon;
   [SerializeField] private string NPCName;
   
-  private bool isDialogueActive = false;
+ 
 
 
 
   private void OnTriggerStay(Collider coll)
   {
-    if (coll.CompareTag("Player") && !isDialogueActive && Input.GetKeyDown(KeyCode.H)) StartDialogue();
+    if (coll.CompareTag("Player") && Input.GetKeyUp(KeyCode.E)) StartDialogue();
+    
   }
+
 
   private void StartDialogue()
   {
@@ -34,11 +36,11 @@ public class NPC_DATA : MonoBehaviour
       Debug.Log(text);
     }
     SpeachBubbleUI speechBubbleScript = speechBubble.GetComponent<SpeachBubbleUI>(); 
+    
     speechBubbleScript.SetLevelMove(levelToMoveTo, shouldMoveToLevel);
     speechBubbleScript.SetNPCInfo(NPCIcon, NPCName);
     speechBubbleScript.SetTextSequence(texts, questionString, shouldEnableQuestionText);
     uiManager.OpenPanel(2);
-    isDialogueActive = true;
-    
+ 
   }
 }
