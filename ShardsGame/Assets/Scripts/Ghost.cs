@@ -15,4 +15,6 @@ public class Ghost : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
         }
     }
+    
+    
 }
