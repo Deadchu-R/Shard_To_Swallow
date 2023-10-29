@@ -9,6 +9,7 @@ TagManager:
   - Shard
   - EnemyTileChanger
   - A
+  - EnemyCollider
   layers:
   - Default
   - TransparentFX

@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/HubScene.unity
     guid: 581a226249605f248b2ca9df3f47206b
   - enabled: 1
-    path: Assets/Eviatar Folder/Eviatar Scene.unity
+    path: Assets/Scenes/Eviatar Scene.unity
     guid: bf88c582cfb228c409b12c8f303280c4
   m_configObjects: {}

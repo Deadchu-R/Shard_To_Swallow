@@ -18,7 +18,6 @@ public class TileColor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("collison" + other.name);
         if (other.CompareTag("Shard"))
         {
             rend.sharedMaterial = materials[1];
@@ -32,3 +31,4 @@ public class TileColor : MonoBehaviour
         }
     }
 }
+
