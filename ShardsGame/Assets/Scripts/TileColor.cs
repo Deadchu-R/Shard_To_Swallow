@@ -22,12 +22,14 @@ public class TileColor : MonoBehaviour
         {
             rend.sharedMaterial = materials[1];
             collision.SetActive(false);
+            this.gameObject.tag = "TileRoad";
         }
 
-        if (other.CompareTag("EnemyTileChanger"))
+        if (other.CompareTag("ShapeCollider"))
         {
             rend.sharedMaterial = materials[0];
             collision.SetActive(true);
+            this.gameObject.tag = "Tile";
         }
     }
 }

@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 2834061528291493970}
   m_Layer: 8
   m_Name: X Colliders
-  m_TagString: Untagged
+  m_TagString: ShapeCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2834061528291493970
 Transform:
   m_ObjectHideFlags: 0
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 1271236280854305508}
   m_Layer: 8
   m_Name: Collider XMID
-  m_TagString: EnemyTileChanger
+  m_TagString: ShapeCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 8892191681254169450}
   m_Layer: 8
   m_Name: Collider XRDown
-  m_TagString: EnemyTileChanger
+  m_TagString: ShapeCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 1381448005888693841}
   m_Layer: 8
   m_Name: Collider XRUP (1)
-  m_TagString: EnemyTileChanger
+  m_TagString: ShapeCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -529,7 +529,7 @@ GameObject:
   - component: {fileID: 7323956842489962057}
   m_Layer: 8
   m_Name: Collider XRDown (1)
-  m_TagString: EnemyTileChanger
+  m_TagString: ShapeCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -641,7 +641,7 @@ GameObject:
   - component: {fileID: 1569194050392146055}
   m_Layer: 8
   m_Name: Collider XLUP  (1)
-  m_TagString: EnemyTileChanger
+  m_TagString: ShapeCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -722,7 +722,7 @@ GameObject:
   - component: {fileID: 1320862609787821260}
   m_Layer: 8
   m_Name: 'Collider XLDown '
-  m_TagString: EnemyTileChanger
+  m_TagString: ShapeCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -799,6 +799,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8768785231506454531}
+  - component: {fileID: 81231542819544756}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -824,6 +825,21 @@ Transform:
   - {fileID: 4464008089510172749}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &81231542819544756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6928839555063134353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa9bc11b41b12fb4e8795d3f5005d911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPatrolObj: {fileID: 5858912505660514793}
+  ShapeCollider: {fileID: 342466143608045968}
+  enemyCollider: {fileID: 6918459820612477287}
 --- !u!1 &7945868495930795860
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,7 +853,7 @@ GameObject:
   - component: {fileID: 3159821056219369602}
   m_Layer: 8
   m_Name: 'Collider XLUP '
-  m_TagString: EnemyTileChanger
+  m_TagString: ShapeCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -918,7 +934,7 @@ GameObject:
   - component: {fileID: 3687708882764699754}
   m_Layer: 8
   m_Name: Collider XRUP
-  m_TagString: EnemyTileChanger
+  m_TagString: ShapeCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1032,7 +1048,7 @@ GameObject:
   - component: {fileID: 4425605378326553869}
   m_Layer: 8
   m_Name: Collider XLDown  (1)
-  m_TagString: EnemyTileChanger
+  m_TagString: ShapeCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
