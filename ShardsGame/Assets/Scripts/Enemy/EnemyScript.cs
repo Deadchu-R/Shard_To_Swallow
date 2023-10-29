@@ -8,12 +8,12 @@ public class EnemyScript : MonoBehaviour
 {
   [SerializeField] private GameObject enemyPatrolObj;
   [SerializeField] private GameObject ShapeCollider;
-  [SerializeField] private Collider enemyCollider;
+  [SerializeField] private GameObject enemyFather;
 
-  private void OnCollisionEnter(Collision other)
+  private void OnTriggerEnter(Collider other)
   {
     Debug.Log("collision");
-    if (other.collider.CompareTag("TileRoad"))
+    if (other.CompareTag("TileRoad"))
     {
       Debug.Log("enemy with road");
       enemyPatrolObj.SetActive(false);

@@ -10,6 +10,8 @@ TagManager:
   - EnemyTileChanger
   - A
   - EnemyCollider
+  - ShapeCollider
+  - TileRoad
   layers:
   - Default
   - TransparentFX
