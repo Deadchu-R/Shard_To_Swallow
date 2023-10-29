@@ -35,12 +35,15 @@ public class NPC_DATA : MonoBehaviour
     {
       Debug.Log(text);
     }
+    SetSpeechBubble();
+    uiManager.OpenPanel(2);
+ 
+  }
+  private void SetSpeechBubble()
+  {
     SpeachBubbleUI speechBubbleScript = speechBubble.GetComponent<SpeachBubbleUI>(); 
-    
     speechBubbleScript.SetLevelMove(levelToMoveTo, shouldMoveToLevel);
     speechBubbleScript.SetNPCInfo(NPCIcon, NPCName);
     speechBubbleScript.SetTextSequence(texts, questionString, shouldEnableQuestionText);
-    uiManager.OpenPanel(2);
- 
   }
 }

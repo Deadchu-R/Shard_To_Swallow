@@ -16,8 +16,8 @@ public class SpeachBubbleUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI NPCName;
     private bool shouldEnableQuestionText = false;
     private string[] texts;
-    private string questionText;
-   public int currentPage = 0;
+    private string questionText; 
+    public int currentPage = 0;
     private bool shouldMoveToLevel = false;
     private int levelNum = 0;
 

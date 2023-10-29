@@ -28,7 +28,6 @@ public class TileColor : MonoBehaviour
         if (other.CompareTag("EnemyTileChanger"))
         {
             rend.sharedMaterial = materials[0];
-            Debug.Log("Enemy Tile Changer");
             collision.SetActive(true);
         }
     }
