@@ -14,6 +14,7 @@ public class TileColor : MonoBehaviour
         rend = GetComponent<Renderer>();
         rend.enabled = true;
         rend.sharedMaterial = materials[0];
+        collision = gameObject;
     }
 
     private void OnTriggerEnter(Collider other)
