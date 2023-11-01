@@ -1,0 +1,66 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Audio;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+public class AudioManager : MonoBehaviour
+{
+
+    public Sound[] sounds; // Here is our sounds array
+  //public Sound[] walkingClips; // custom sounds array for spesific sounds
+
+    public AudioClip[] mainMusicClips; // Main game music(ambient)
+  
+
+    //     void Awake()
+    // {
+    //     foreach(Sound s in sounds)
+    //     {
+    //        s.source = gameObject.AddComponent<AudioSource>();
+    //        s.source.clip =s.clip;
+    //        s.source.volume =s.volume;
+    //        s.source.pitch =s.pitch;
+    //     }
+    // }
+    void Start()
+    {
+       //   gameObject.GetComponent<AudioSource>().volume = 0.05f;
+    }
+
+    void Update()
+    {
+        // Playing the main music, can input many tracks so it will get one randomly each time
+        if(!gameObject.GetComponent<AudioSource>().isPlaying)
+        {
+            gameObject.GetComponent<AudioSource>().clip = GetRandomClip();
+            gameObject.GetComponent<AudioSource>().Play();
+            
+        }
+    }
+    public AudioClip GetRandomClip()
+    {   // Get random main music clip
+            return mainMusicClips[Random.Range(0,mainMusicClips.Length)];
+    }
+    public void Play(AudioSource source, Sound snd)
+    { 
+      Sound s = Array.Find(sounds, sound => sound == snd); 
+      source.clip = s.clip; 
+      source.Play(); 
+    }
+      /*
+       // How to call from other script:
+        //Play sound
+
+            if(!gameObject.GetComponent<AudioSource>().isPlaying)
+             {
+            AudioManager audioManager = GameObject.Find("/GameManager").GetComponent<AudioManager>();
+            Sound snd = audioManager.sounds[Random.Range(0,audioManager.sounds.Length)];
+            audioManager.Play(gameObject.GetComponent<AudioSource>(), snd);
+             }
+
+       //Example in FourDirectionalMovement script
+      */
+    
+}

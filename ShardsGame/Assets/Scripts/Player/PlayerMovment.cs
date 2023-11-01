@@ -7,9 +7,20 @@ public class FourDirectionalMovement : MonoBehaviour
     public float moveSpeed = 5.0f;
     public float kickForce = 10.0f;
     public float sphereCastRadius = 1.0f;
+    public float interactionRange = 2f;
+    public float grabSpeed = 5f;
+    private Vector3 offsetFromPlayer = new Vector3(0f, 0f, 0f);
+    public float GrabOffsetFromPlayer;
+    private GameObject grabbedObject;
 
     private void Update()
     {
+
+        if (grabbedObject != null)
+        {
+            UpdateGrabPosition();
+        }
+
         //Movment
         Walk();
 
@@ -20,7 +31,22 @@ public class FourDirectionalMovement : MonoBehaviour
         {
             Kick();
         }
+
+        //Grab
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (grabbedObject == null)
+            {
+                TryGrabObject();
+            }
+            else
+            {
+                ReleaseObject();
+            }
+        }
+
     }
+
 
     private void Walk()
     {
@@ -39,9 +65,15 @@ public class FourDirectionalMovement : MonoBehaviour
             {
                 inputDirection.x = 0;
             }
-
+            
             transform.Translate(inputDirection * moveSpeed * Time.deltaTime);
-
+             //Play sound
+            if(!gameObject.GetComponent<AudioSource>().isPlaying)
+             {
+            AudioManager audioManager = GameObject.Find("/GameManager").GetComponent<AudioManager>();
+            Sound snd = audioManager.sounds[Random.Range(0,audioManager.sounds.Length)];
+            audioManager.Play(gameObject.GetComponent<AudioSource>(), snd);
+             }
         }
     }
 
@@ -61,5 +93,55 @@ public class FourDirectionalMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    void TryGrabObject()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange);
+
+        foreach (var collider in colliders)
+        {
+            if (collider.CompareTag("Shard"))
+            {
+                grabbedObject = collider.gameObject;
+                break;
+            }
+        }
+    }
+
+    void ReleaseObject()
+    {
+        if (grabbedObject != null)
+        {
+            grabbedObject = null;
+        }
+    }
+
+    void UpdateGrabPosition()
+    {
+        if (offsetFromPlayer.x < grabbedObject.transform.position.x && offsetFromPlayer.z < grabbedObject.transform.position.z)
+        {
+            offsetFromPlayer = new Vector3(GrabOffsetFromPlayer, 0, 0);
+        }
+        if (offsetFromPlayer.x < grabbedObject.transform.position.x && offsetFromPlayer.z > grabbedObject.transform.position.z)
+        {
+            offsetFromPlayer = new Vector3(0, 0, GrabOffsetFromPlayer);
+        }
+        if (offsetFromPlayer.x > grabbedObject.transform.position.x && offsetFromPlayer.z > grabbedObject.transform.position.z)
+        {
+            offsetFromPlayer = new Vector3(-GrabOffsetFromPlayer, 0, 0);
+        }
+        if (offsetFromPlayer.x > grabbedObject.transform.position.x && offsetFromPlayer.z < grabbedObject.transform.position.z)
+        {
+            offsetFromPlayer = new Vector3(0, 0, -GrabOffsetFromPlayer);
+        }
+        Vector3 targetPosition = transform.position + offsetFromPlayer;
+        grabbedObject.transform.position = Vector3.Lerp(grabbedObject.transform.position, targetPosition, grabSpeed * Time.deltaTime);
+    }    
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, interactionRange);
     }
 }
