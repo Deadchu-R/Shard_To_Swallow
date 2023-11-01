@@ -17,6 +17,7 @@ public class QuestManager : MonoBehaviour
 
     public void SetQuestSequence(string[] questSequence)
     {
+        ResetQuestSequence();
         this.questSequence = questSequence;
     }
 
@@ -55,7 +56,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public void ResetQuestSequence()
+    private void ResetQuestSequence()
     {
         questText.fontStyle = fontStyle;
         questText.gameObject.SetActive(false);
