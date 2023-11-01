@@ -7046,7 +7046,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2680678565984976883, guid: 81cd57c8abf20d6409e4e1b56048d731, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4848596839473429692, guid: 81cd57c8abf20d6409e4e1b56048d731, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -8038,10 +8038,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5615767923026042485, guid: d190ecb95ef9c294aace081c4e4854ac, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d190ecb95ef9c294aace081c4e4854ac, type: 3}
 --- !u!4 &1598297395 stripped
 Transform:
@@ -8789,6 +8786,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2413867945145846583, guid: 65fb2e88b513b074da595ac79259bdc6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 67f076728746a7a40aff6d9194cad7b7, type: 3}
     - target: {fileID: 7269885770988162197, guid: 65fb2e88b513b074da595ac79259bdc6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -21.82
