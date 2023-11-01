@@ -15,6 +15,7 @@ public class NPC_DATA : MonoBehaviour
   [SerializeField] private bool shouldEnableQuestionText = false;
   [SerializeField] private bool shouldMoveToLevel = false;
   [SerializeField] private int levelToMoveTo = 0;
+  [SerializeField] private bool showIcon = false;
   [SerializeField] private Sprite NPCIcon;
   [SerializeField] private string NPCName;
   
@@ -25,25 +26,27 @@ public class NPC_DATA : MonoBehaviour
   private void OnTriggerStay(Collider coll)
   {
     if (coll.CompareTag("Player") && Input.GetKeyUp(KeyCode.E)) StartDialogue();
-    
   }
 
-
-  private void StartDialogue()
+  private void DebugText()
   {
     foreach ( string text in texts )
     {
       Debug.Log(text);
     }
+  }
+
+  private void StartDialogue()
+  {
+    //DebugText();
     SetSpeechBubble();
     uiManager.OpenPanel(2);
- 
   }
   private void SetSpeechBubble()
   {
     SpeachBubbleUI speechBubbleScript = speechBubble.GetComponent<SpeachBubbleUI>(); 
     speechBubbleScript.SetLevelMove(levelToMoveTo, shouldMoveToLevel);
-    speechBubbleScript.SetNPCInfo(NPCIcon, NPCName);
+    speechBubbleScript.SetNPCInfo(NPCIcon, NPCName,showIcon);
     speechBubbleScript.SetTextSequence(texts, questionString, shouldEnableQuestionText);
   }
 }
