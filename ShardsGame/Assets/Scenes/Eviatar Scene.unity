@@ -323,7 +323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7269885770988162197, guid: 65fb2e88b513b074da595ac79259bdc6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.221
+      value: -26.08
       objectReference: {fileID: 0}
     - target: {fileID: 7269885770988162197, guid: 65fb2e88b513b074da595ac79259bdc6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -331,7 +331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7269885770988162197, guid: 65fb2e88b513b074da595ac79259bdc6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.57
+      value: 7.96
       objectReference: {fileID: 0}
     - target: {fileID: 7269885770988162197, guid: 65fb2e88b513b074da595ac79259bdc6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6034,6 +6034,11 @@ ParticleSystem:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7311679487184480080, guid: 31360f1c7e2e3d44ba637ed8043ba579, type: 3}
   m_PrefabInstance: {fileID: 756827884}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &602764529 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7269885770988162197, guid: 65fb2e88b513b074da595ac79259bdc6, type: 3}
+  m_PrefabInstance: {fileID: 120014537}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &619675357 stripped
 Transform:
@@ -30587,6 +30592,67 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1740638458}
   m_SourcePrefab: {fileID: 100100000, guid: 6807e8752e77ccd479fdd779079a2c4c, type: 3}
+--- !u!1001 &5078872184949079582
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 311510358881360671, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -22.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 311510358881360671, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 311510358881360671, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 311510358881360671, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.92387956
+      objectReference: {fileID: 0}
+    - target: {fileID: 311510358881360671, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311510358881360671, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.38268343
+      objectReference: {fileID: 0}
+    - target: {fileID: 311510358881360671, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311510358881360671, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 311510358881360671, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 311510358881360671, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7619977013193578668, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: m_Name
+      value: ZombieEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8374689620123209514, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 602764529}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7e19e7416601dd4f8968b914f559ae0, type: 3}
 --- !u!1001 &6346357102956445376
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30662,3 +30728,4 @@ SceneRoots:
   - {fileID: 1567532661}
   - {fileID: 910701533}
   - {fileID: 480740893}
+  - {fileID: 5078872184949079582}
