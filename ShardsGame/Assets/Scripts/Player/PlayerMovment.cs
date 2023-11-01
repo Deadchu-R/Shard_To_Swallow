@@ -39,8 +39,15 @@ public class FourDirectionalMovement : MonoBehaviour
             {
                 inputDirection.x = 0;
             }
-
+            
             transform.Translate(inputDirection * moveSpeed * Time.deltaTime);
+             //Play sound
+            if(!gameObject.GetComponent<AudioSource>().isPlaying)
+             {
+            AudioManager audioManager = GameObject.Find("/GameManager").GetComponent<AudioManager>();
+            Sound snd = audioManager.sounds[Random.Range(0,audioManager.sounds.Length)];
+            audioManager.Play(gameObject.GetComponent<AudioSource>(), snd);
+             }
 
         }
     }
