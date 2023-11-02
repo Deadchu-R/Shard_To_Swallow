@@ -25,26 +25,22 @@ public class SpeachBubbleUI : MonoBehaviour
 
     public void SetTextSequence(string[] texts, string questionText, bool shouldEnableQuestionText)
     {
-        if (!isDialogueActive)
-        {
-            gameObject.SetActive(true); // Lior Addition
-            isDialogueActive = true;
-            this.shouldEnableQuestionText = shouldEnableQuestionText;
-            this.questionText = questionText;
-            this.texts = texts;
-            speechText.text = texts[0];
-            backButton.gameObject.SetActive(false);
-            nextButton.gameObject.SetActive(true);
-            backButton.interactable = false;
-            nextButton.onClick.AddListener(NextPage);
-             GameObject.FindWithTag("Player").GetComponent<FourDirectionalMovement>().moveSpeed = 0;
-        }
+        if (isDialogueActive) return;
+        isDialogueActive = true;
+        this.shouldEnableQuestionText = shouldEnableQuestionText;
+        this.questionText = questionText;
+        this.texts = texts;
+        speechText.text = texts[0];
+        nextButton.gameObject.SetActive(true);
+        nextButton.onClick.AddListener(NextPage);
     }
 
-    public void SetNPCInfo(Sprite NPCIcon, string NPCName)
+    public void SetNPCInfo(Sprite NPCIcon, string NPCName, bool showIcon)
     {
-        this.NPCIcon.sprite = NPCIcon;
         this.NPCName.text = NPCName;
+        if (!showIcon) this.NPCIcon.gameObject.SetActive(false);
+        else
+        this.NPCIcon.sprite = NPCIcon;
     }
 
     public void SetLevelMove(int levelNumber, bool shouldMoveToLevel)
@@ -55,8 +51,7 @@ public class SpeachBubbleUI : MonoBehaviour
 
 
     private void NextPage()
-    {       
-       
+    {
         backButton.gameObject.SetActive(true);
         backButton.interactable = true;
         if (currentPage < texts.Length - 1)
@@ -64,20 +59,15 @@ public class SpeachBubbleUI : MonoBehaviour
             currentPage++;
             backButton.onClick.AddListener(LastPage);
         }
-
         speechText.text = texts[currentPage];
         CheckLastPage();
     }
 
     private void CheckLastPage()
     {
-        if (currentPage + 1 == texts.Length)
-        {
-            nextButton.onClick.AddListener(ClosePanel);
-            nextButton.onClick.RemoveListener(NextPage);
-        }
-        
-        
+        if (currentPage + 1 != texts.Length) return;
+        nextButton.onClick.AddListener(ClosePanel);
+        nextButton.onClick.RemoveListener(NextPage);
     }
 
     private void LastPage()
@@ -105,6 +95,5 @@ public class SpeachBubbleUI : MonoBehaviour
         speechText.text = texts[currentPage];
         nextButton.onClick.RemoveAllListeners();
         isDialogueActive = false;
-        GameObject.FindWithTag("Player").GetComponent<FourDirectionalMovement>().moveSpeed = GameObject.FindWithTag("Player").GetComponent<FourDirectionalMovement>().moveSpeedOriginal;
     }
 }
