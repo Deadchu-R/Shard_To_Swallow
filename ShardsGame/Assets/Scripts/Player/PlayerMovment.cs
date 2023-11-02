@@ -13,12 +13,14 @@ public class FourDirectionalMovement : MonoBehaviour
     public float GrabOffsetFromPlayer;
     private GameObject grabbedObject;
     public Animator anim;
+    public SpriteRenderer sR;
 
 
 
     private void Start()
     {
         anim = gameObject.GetComponent<Animator>();
+        sR = gameObject.GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
@@ -58,29 +60,93 @@ public class FourDirectionalMovement : MonoBehaviour
 
     private void AnimeBoolSys()
     {
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W))
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    anim.SetBool("WalkingRight", false);
+        //    anim.SetBool("IdleRight", true);
+        //    anim.SetBool("IdleLeft", false);
+        //}
+
+        if (Input.GetKey(KeyCode.S))
         {
             anim.SetBool("WalkingRight", true);
             anim.SetBool("IdleRight", false);
             anim.SetBool("IdleLeft", false);
+            sR.flipX = true;
         }
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W))
+
+        if (Input.GetKeyUp(KeyCode.S))
         {
             anim.SetBool("WalkingRight", false);
             anim.SetBool("IdleRight", true);
+            anim.SetBool("IdleLeft", false);
         }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S))
+
+        //if (Input.GetKeyDown(KeyCode.D))
+        //{
+        //    anim.SetBool("WalkingRight", false);
+        //    anim.SetBool("IdleRight", true);
+        //    anim.SetBool("IdleLeft", false);
+        //}
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            anim.SetBool("WalkingRight", true);
+            anim.SetBool("IdleRight", false);
+            anim.SetBool("IdleLeft", false);
+            sR.flipX = false;
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            anim.SetBool("WalkingRight", false);
+            anim.SetBool("IdleRight", true);
+            anim.SetBool("IdleLeft", false);
+        }
+
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    anim.SetBool("WalkingLeft", false);
+        //    anim.SetBool("IdleLeft", true);
+        //    anim.SetBool("IdleRight", false);
+        //}
+
+        if (Input.GetKey(KeyCode.A))
         {
             anim.SetBool("WalkingLeft", true);
             anim.SetBool("IdleLeft", false);
             anim.SetBool("IdleRight", false);
+            sR.flipX = true;
         }
-        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S))
+
+        if (Input.GetKeyUp(KeyCode.A))
         {
             anim.SetBool("WalkingLeft", false);
             anim.SetBool("IdleLeft", true);
+            anim.SetBool("IdleRight", false);
+        }
+
+        //if (Input.GetKeyDown(KeyCode.W))
+        //{
+        //    anim.SetBool("WalkingLeft", false);
+        //    anim.SetBool("IdleLeft", true);
+        //    anim.SetBool("IdleRight", false);
+        //}
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            anim.SetBool("WalkingLeft", true);
+            anim.SetBool("IdleLeft", false);
+            anim.SetBool("IdleRight", false);
+            sR.flipX = false; 
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            anim.SetBool("WalkingLeft", false);
+            anim.SetBool("IdleLeft", true);
+            anim.SetBool("IdleRight", false);
         }
     }
+
     private void Walk()
     {
         float horizontalInput = Input.GetAxis("Vertical");
@@ -183,4 +249,5 @@ public class FourDirectionalMovement : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, interactionRange);
     }
+
 }
