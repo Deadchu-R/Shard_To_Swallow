@@ -6,7 +6,14 @@ public class Ghost : MonoBehaviour
 {
     public Transform player;
     public float followSpeed = 5.0f;
+    public Animator anim;
+    public SpriteRenderer sR;
 
+    private void Start()
+    {
+        anim = gameObject.GetComponent<Animator>();
+        sR = gameObject.GetComponent<SpriteRenderer>();
+    }
     private void Update()
     {
         if (player != null)
