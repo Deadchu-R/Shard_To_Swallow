@@ -143,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   materials:
   - {fileID: 2100000, guid: 10192e76d5b09d84faa90e90f023b991, type: 2}
-  - {fileID: 2100000, guid: 7303c83678d07054a80080193fcf0844, type: 2}
+  - {fileID: 2100000, guid: a79c7110e65e58546b4c72a791796c9d, type: 2}
   collision: {fileID: 8958718916949025284}
 --- !u!1 &8958718916949025284
 GameObject:
