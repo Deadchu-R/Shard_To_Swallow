@@ -5,9 +5,14 @@ using UnityEngine;
 public class FourDirectionalMovement : MonoBehaviour
 {
     public float moveSpeed = 5.0f;
+    public float moveSpeedOriginal = 5.0f;
     public float kickForce = 10.0f;
     public float sphereCastRadius = 1.0f;
 
+    private void Start()
+    {
+        moveSpeedOriginal = moveSpeed;
+    }
     private void Update()
     {
         //Movment
@@ -41,6 +46,8 @@ public class FourDirectionalMovement : MonoBehaviour
             }
             
             transform.Translate(inputDirection * moveSpeed * Time.deltaTime);
+            
+            if(moveSpeed > 0)
              //Play sound
             if(!gameObject.GetComponent<AudioSource>().isPlaying)
              {

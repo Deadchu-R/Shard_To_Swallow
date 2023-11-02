@@ -27,6 +27,7 @@ public class SpeachBubbleUI : MonoBehaviour
     {
         if (!isDialogueActive)
         {
+            gameObject.SetActive(true); // Lior Addition
             isDialogueActive = true;
             this.shouldEnableQuestionText = shouldEnableQuestionText;
             this.questionText = questionText;
@@ -36,6 +37,7 @@ public class SpeachBubbleUI : MonoBehaviour
             nextButton.gameObject.SetActive(true);
             backButton.interactable = false;
             nextButton.onClick.AddListener(NextPage);
+             GameObject.FindWithTag("Player").GetComponent<FourDirectionalMovement>().moveSpeed = 0;
         }
     }
 
@@ -53,7 +55,8 @@ public class SpeachBubbleUI : MonoBehaviour
 
 
     private void NextPage()
-    {
+    {       
+       
         backButton.gameObject.SetActive(true);
         backButton.interactable = true;
         if (currentPage < texts.Length - 1)
@@ -73,6 +76,8 @@ public class SpeachBubbleUI : MonoBehaviour
             nextButton.onClick.AddListener(ClosePanel);
             nextButton.onClick.RemoveListener(NextPage);
         }
+        
+        
     }
 
     private void LastPage()
@@ -100,5 +105,6 @@ public class SpeachBubbleUI : MonoBehaviour
         speechText.text = texts[currentPage];
         nextButton.onClick.RemoveAllListeners();
         isDialogueActive = false;
+        GameObject.FindWithTag("Player").GetComponent<FourDirectionalMovement>().moveSpeed = GameObject.FindWithTag("Player").GetComponent<FourDirectionalMovement>().moveSpeedOriginal;
     }
 }
