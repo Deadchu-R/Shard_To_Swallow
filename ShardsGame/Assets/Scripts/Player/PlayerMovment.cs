@@ -12,6 +12,7 @@ public class FourDirectionalMovement : MonoBehaviour
     private Vector3 offsetFromPlayer = new Vector3(0f, 0f, 0f);
     public float GrabOffsetFromPlayer;
     private GameObject grabbedObject;
+    public GameObject playerRef;
     public Animator anim;
     public SpriteRenderer sR;
 
@@ -19,8 +20,8 @@ public class FourDirectionalMovement : MonoBehaviour
 
     private void Start()
     {
-        anim = gameObject.GetComponent<Animator>();
-        sR = gameObject.GetComponent<SpriteRenderer>();
+        anim = playerRef.GetComponent<Animator>();
+        sR = playerRef.GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
