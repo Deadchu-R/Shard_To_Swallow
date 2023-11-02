@@ -22,6 +22,7 @@ public class UI_Manager : MonoBehaviour
     {
         Debug.Log(text);
        _playerUIScript.SetQuestionText(text);
+        OpenPanel(0);
     }
     
 }

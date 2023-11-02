@@ -25,6 +25,8 @@ public class SpeachBubbleUI : MonoBehaviour
 
     public void SetTextSequence(string[] texts, string questionText, bool shouldEnableQuestionText)
     {
+        uiManager.ClosePanel(0);
+        uiManager.OpenPanel(2);
         if (isDialogueActive) return;
         isDialogueActive = true;
         this.shouldEnableQuestionText = shouldEnableQuestionText;
@@ -88,6 +90,7 @@ public class SpeachBubbleUI : MonoBehaviour
 
     private void ClosePanel()
     {
+       
         if (shouldEnableQuestionText) uiManager.SetPlayerUIQuestionText(questionText);
         if (shouldMoveToLevel) SceneManager.LoadScene(levelNum);
         gameObject.SetActive(false);
