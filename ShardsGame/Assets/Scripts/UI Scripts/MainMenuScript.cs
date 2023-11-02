@@ -11,7 +11,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void StartLevel()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(4);
     }
     
     public void OpenCredits()

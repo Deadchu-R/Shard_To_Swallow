@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Eviatar Scene.unity
     guid: bf88c582cfb228c409b12c8f303280c4
+  - enabled: 1
+    path: Assets/Scenes/LevelScene.unity
+    guid: 2f9688271c7a8874a83a9f872e878809
+  - enabled: 1
+    path: Assets/Scenes/VillageScene.unity
+    guid: c2f151dec1604fc449dabef3bdf550c0
   m_configObjects: {}
