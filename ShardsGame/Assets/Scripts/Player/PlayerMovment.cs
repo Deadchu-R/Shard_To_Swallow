@@ -5,7 +5,6 @@ using UnityEngine;
 public class FourDirectionalMovement : MonoBehaviour
 {
     public float moveSpeed = 5.0f;
-    public float moveSpeedOriginal = 5.0f;
     public float kickForce = 10.0f;
     public float sphereCastRadius = 1.0f;
     public float interactionRange = 2f;
@@ -13,13 +12,20 @@ public class FourDirectionalMovement : MonoBehaviour
     private Vector3 offsetFromPlayer = new Vector3(0f, 0f, 0f);
     public float GrabOffsetFromPlayer;
     private GameObject grabbedObject;
+    public GameObject playerRef;
+    public Animator anim;
+    public SpriteRenderer sR;
+
+
 
     private void Start()
     {
-        moveSpeedOriginal = moveSpeed;
+        anim = playerRef.GetComponent<Animator>();
+        sR = playerRef.GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
+        AnimeBoolSys();
 
         if (grabbedObject != null)
         {
@@ -40,6 +46,7 @@ public class FourDirectionalMovement : MonoBehaviour
         //Grab
         if (Input.GetKeyDown(KeyCode.E))
         {
+
             if (grabbedObject == null)
             {
                 TryGrabObject();
@@ -52,6 +59,94 @@ public class FourDirectionalMovement : MonoBehaviour
 
     }
 
+    private void AnimeBoolSys()
+    {
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    anim.SetBool("WalkingRight", false);
+        //    anim.SetBool("IdleRight", true);
+        //    anim.SetBool("IdleLeft", false);
+        //}
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            anim.SetBool("WalkingRight", true);
+            anim.SetBool("IdleRight", false);
+            anim.SetBool("IdleLeft", false);
+            sR.flipX = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            anim.SetBool("WalkingRight", false);
+            anim.SetBool("IdleRight", true);
+            anim.SetBool("IdleLeft", false);
+        }
+
+        //if (Input.GetKeyDown(KeyCode.D))
+        //{
+        //    anim.SetBool("WalkingRight", false);
+        //    anim.SetBool("IdleRight", true);
+        //    anim.SetBool("IdleLeft", false);
+        //}
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            anim.SetBool("WalkingRight", true);
+            anim.SetBool("IdleRight", false);
+            anim.SetBool("IdleLeft", false);
+            sR.flipX = false;
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            anim.SetBool("WalkingRight", false);
+            anim.SetBool("IdleRight", true);
+            anim.SetBool("IdleLeft", false);
+        }
+
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    anim.SetBool("WalkingLeft", false);
+        //    anim.SetBool("IdleLeft", true);
+        //    anim.SetBool("IdleRight", false);
+        //}
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            anim.SetBool("WalkingLeft", true);
+            anim.SetBool("IdleLeft", false);
+            anim.SetBool("IdleRight", false);
+            sR.flipX = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            anim.SetBool("WalkingLeft", false);
+            anim.SetBool("IdleLeft", true);
+            anim.SetBool("IdleRight", false);
+        }
+
+        //if (Input.GetKeyDown(KeyCode.W))
+        //{
+        //    anim.SetBool("WalkingLeft", false);
+        //    anim.SetBool("IdleLeft", true);
+        //    anim.SetBool("IdleRight", false);
+        //}
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            anim.SetBool("WalkingLeft", true);
+            anim.SetBool("IdleLeft", false);
+            anim.SetBool("IdleRight", false);
+            sR.flipX = false; 
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            anim.SetBool("WalkingLeft", false);
+            anim.SetBool("IdleLeft", true);
+            anim.SetBool("IdleRight", false);
+        }
+    }
 
     private void Walk()
     {
@@ -72,8 +167,6 @@ public class FourDirectionalMovement : MonoBehaviour
             }
             
             transform.Translate(inputDirection * moveSpeed * Time.deltaTime);
-            
-            if(moveSpeed > 0)
              //Play sound
             if(!gameObject.GetComponent<AudioSource>().isPlaying)
              {
@@ -121,6 +214,8 @@ public class FourDirectionalMovement : MonoBehaviour
         if (grabbedObject != null)
         {
             grabbedObject = null;
+            anim.SetBool("PullRight", false);
+            anim.SetBool("PullLeft", false);
         }
     }
 
@@ -129,18 +224,22 @@ public class FourDirectionalMovement : MonoBehaviour
         if (offsetFromPlayer.x < grabbedObject.transform.position.x && offsetFromPlayer.z < grabbedObject.transform.position.z)
         {
             offsetFromPlayer = new Vector3(GrabOffsetFromPlayer, 0, 0);
+            anim.SetBool("PullLeft", true);
         }
         if (offsetFromPlayer.x < grabbedObject.transform.position.x && offsetFromPlayer.z > grabbedObject.transform.position.z)
         {
             offsetFromPlayer = new Vector3(0, 0, GrabOffsetFromPlayer);
+            anim.SetBool("PullLeft", true);
         }
         if (offsetFromPlayer.x > grabbedObject.transform.position.x && offsetFromPlayer.z > grabbedObject.transform.position.z)
         {
             offsetFromPlayer = new Vector3(-GrabOffsetFromPlayer, 0, 0);
+            anim.SetBool("PullRight", true);
         }
         if (offsetFromPlayer.x > grabbedObject.transform.position.x && offsetFromPlayer.z < grabbedObject.transform.position.z)
         {
             offsetFromPlayer = new Vector3(0, 0, -GrabOffsetFromPlayer);
+            anim.SetBool("PullRight", true);
         }
         Vector3 targetPosition = transform.position + offsetFromPlayer;
         grabbedObject.transform.position = Vector3.Lerp(grabbedObject.transform.position, targetPosition, grabSpeed * Time.deltaTime);
@@ -151,4 +250,5 @@ public class FourDirectionalMovement : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, interactionRange);
     }
+
 }

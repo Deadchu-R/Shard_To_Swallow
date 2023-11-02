@@ -89,26 +89,18 @@ public class CreateMAp : MonoBehaviour
 
     private void ColorChecker(GameObject currentTile, Vector3 pos, GameObject map, Color c)
     {
-        if (c.Equals(Color.black))
+        if (c.Equals(Color.red))
         {
-            CreateTile("black",currentTile,pos, map, materials[0]);
+            CreateTile("red",currentTile,pos, map, materials[0]);
         }
-        if (c.Equals(Color.white))
+        if (c.Equals(Color.green))
         {
-            CreateTile("white",currentTile,pos, map, materials[0]);
+            CreateTile("green", currentTile,pos, map, materials[1]);
         }
             
-        if (c.Equals(Color.gray))
-        {
-            CreateTile("gray",currentTile,pos, map, materials[1]);
-        }
-        if (c.Equals(Color.magenta))
-        {
-            CreateTile("magenta",currentTile,pos, map, materials[2]);
-        }
         if (c.Equals(Color.blue))
         {
-            CreateTile("blue",currentTile,pos, map, materials[3]);
+            CreateTile("blue", currentTile,pos, map, materials[2]);
         }
         Debug.Log("obj color is:" + c );
     }
