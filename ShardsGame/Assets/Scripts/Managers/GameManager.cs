@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] float TimerSeconds = 60f;
+    //[SerializeField] float TimerSeconds = 60f;
     public static GameManager Instance { get; private set; }
 
     private void Awake()

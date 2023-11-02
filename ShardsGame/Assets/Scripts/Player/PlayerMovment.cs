@@ -12,9 +12,17 @@ public class FourDirectionalMovement : MonoBehaviour
     private Vector3 offsetFromPlayer = new Vector3(0f, 0f, 0f);
     public float GrabOffsetFromPlayer;
     private GameObject grabbedObject;
+    public Animator anim;
 
+
+
+    private void Start()
+    {
+        anim = gameObject.GetComponent<Animator>();
+    }
     private void Update()
     {
+        AnimeBoolSys();
 
         if (grabbedObject != null)
         {
@@ -35,6 +43,7 @@ public class FourDirectionalMovement : MonoBehaviour
         //Grab
         if (Input.GetKeyDown(KeyCode.E))
         {
+
             if (grabbedObject == null)
             {
                 TryGrabObject();
@@ -47,7 +56,31 @@ public class FourDirectionalMovement : MonoBehaviour
 
     }
 
-
+    private void AnimeBoolSys()
+    {
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W))
+        {
+            anim.SetBool("WalkingRight", true);
+            anim.SetBool("IdleRight", false);
+            anim.SetBool("IdleLeft", false);
+        }
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W))
+        {
+            anim.SetBool("WalkingRight", false);
+            anim.SetBool("IdleRight", true);
+        }
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S))
+        {
+            anim.SetBool("WalkingLeft", true);
+            anim.SetBool("IdleLeft", false);
+            anim.SetBool("IdleRight", false);
+        }
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S))
+        {
+            anim.SetBool("WalkingLeft", false);
+            anim.SetBool("IdleLeft", true);
+        }
+    }
     private void Walk()
     {
         float horizontalInput = Input.GetAxis("Vertical");
@@ -114,6 +147,8 @@ public class FourDirectionalMovement : MonoBehaviour
         if (grabbedObject != null)
         {
             grabbedObject = null;
+            anim.SetBool("PullRight", false);
+            anim.SetBool("PullLeft", false);
         }
     }
 
@@ -122,18 +157,22 @@ public class FourDirectionalMovement : MonoBehaviour
         if (offsetFromPlayer.x < grabbedObject.transform.position.x && offsetFromPlayer.z < grabbedObject.transform.position.z)
         {
             offsetFromPlayer = new Vector3(GrabOffsetFromPlayer, 0, 0);
+            anim.SetBool("PullLeft", true);
         }
         if (offsetFromPlayer.x < grabbedObject.transform.position.x && offsetFromPlayer.z > grabbedObject.transform.position.z)
         {
             offsetFromPlayer = new Vector3(0, 0, GrabOffsetFromPlayer);
+            anim.SetBool("PullLeft", true);
         }
         if (offsetFromPlayer.x > grabbedObject.transform.position.x && offsetFromPlayer.z > grabbedObject.transform.position.z)
         {
             offsetFromPlayer = new Vector3(-GrabOffsetFromPlayer, 0, 0);
+            anim.SetBool("PullRight", true);
         }
         if (offsetFromPlayer.x > grabbedObject.transform.position.x && offsetFromPlayer.z < grabbedObject.transform.position.z)
         {
             offsetFromPlayer = new Vector3(0, 0, -GrabOffsetFromPlayer);
+            anim.SetBool("PullRight", true);
         }
         Vector3 targetPosition = transform.position + offsetFromPlayer;
         grabbedObject.transform.position = Vector3.Lerp(grabbedObject.transform.position, targetPosition, grabSpeed * Time.deltaTime);
