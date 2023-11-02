@@ -4943,8 +4943,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1461064856375151738}
-  - component: {fileID: 5144524079180825299}
   - component: {fileID: 8146105136530857090}
+  - component: {fileID: 164529537119247341}
   m_Layer: 6
   m_Name: Shard
   m_TagString: Shard
@@ -4969,29 +4969,6 @@ Transform:
   - {fileID: 5728172830581645578}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &5144524079180825299
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7963031701382830942}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.82835704
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: -0.013786972, y: 0, z: -0.062479615}
 --- !u!54 &8146105136530857090
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5019,3 +4996,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!65 &164529537119247341
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7963031701382830942}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
