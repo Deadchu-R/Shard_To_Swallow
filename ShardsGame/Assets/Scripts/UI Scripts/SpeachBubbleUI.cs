@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -22,6 +23,12 @@ public class SpeachBubbleUI : MonoBehaviour
     private int levelNum = 0;
 
     private bool isDialogueActive = false;
+
+    private void Awake()
+    {
+        isDialogueActive = false;
+        
+    }
 
     public void SetTextSequence(string[] texts, string questionText, bool shouldEnableQuestionText)
     {
