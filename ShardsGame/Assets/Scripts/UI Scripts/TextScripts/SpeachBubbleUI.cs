@@ -15,6 +15,7 @@ public class SpeachBubbleUI : MonoBehaviour
     [SerializeField] private UI_Manager uiManager;
     [SerializeField] private Image NPCIcon;
     [SerializeField] private TextMeshProUGUI NPCName;
+    [SerializeField] private TypeWriterEffect typeWriterEffect;
     private bool shouldEnableQuestionText = false;
     private string[] texts;
     private string questionText; 
@@ -27,7 +28,6 @@ public class SpeachBubbleUI : MonoBehaviour
     private void Awake()
     {
         isDialogueActive = false;
-        
     }
 
     public void SetTextSequence(string[] texts, string questionText, bool shouldEnableQuestionText)
@@ -39,7 +39,9 @@ public class SpeachBubbleUI : MonoBehaviour
         this.shouldEnableQuestionText = shouldEnableQuestionText;
         this.questionText = questionText;
         this.texts = texts;
+        typeWriterEffect.ChangeText();
         speechText.text = texts[0];
+        
         nextButton.gameObject.SetActive(true);
         nextButton.onClick.AddListener(NextPage);
     }
