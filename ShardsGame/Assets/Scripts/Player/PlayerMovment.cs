@@ -61,12 +61,6 @@ public class FourDirectionalMovement : MonoBehaviour
 
     private void AnimeBoolSys()
     {
-        //if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    anim.SetBool("WalkingRight", false);
-        //    anim.SetBool("IdleRight", true);
-        //    anim.SetBool("IdleLeft", false);
-        //}
 
         if (Input.GetKey(KeyCode.S))
         {
@@ -82,14 +76,7 @@ public class FourDirectionalMovement : MonoBehaviour
             anim.SetBool("IdleRight", true);
             anim.SetBool("IdleLeft", false);
         }
-
-        //if (Input.GetKeyDown(KeyCode.D))
-        //{
-        //    anim.SetBool("WalkingRight", false);
-        //    anim.SetBool("IdleRight", true);
-        //    anim.SetBool("IdleLeft", false);
-        //}
-
+        
         if (Input.GetKey(KeyCode.D))
         {
             anim.SetBool("WalkingRight", true);
@@ -103,13 +90,6 @@ public class FourDirectionalMovement : MonoBehaviour
             anim.SetBool("IdleRight", true);
             anim.SetBool("IdleLeft", false);
         }
-
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    anim.SetBool("WalkingLeft", false);
-        //    anim.SetBool("IdleLeft", true);
-        //    anim.SetBool("IdleRight", false);
-        //}
 
         if (Input.GetKey(KeyCode.A))
         {
@@ -125,14 +105,7 @@ public class FourDirectionalMovement : MonoBehaviour
             anim.SetBool("IdleLeft", true);
             anim.SetBool("IdleRight", false);
         }
-
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    anim.SetBool("WalkingLeft", false);
-        //    anim.SetBool("IdleLeft", true);
-        //    anim.SetBool("IdleRight", false);
-        //}
-
+        
         if (Input.GetKey(KeyCode.W))
         {
             anim.SetBool("WalkingLeft", true);

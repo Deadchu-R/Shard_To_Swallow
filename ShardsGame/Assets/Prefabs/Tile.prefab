@@ -142,8 +142,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   materials:
-  - {fileID: 2100000, guid: 10192e76d5b09d84faa90e90f023b991, type: 2}
-  - {fileID: 2100000, guid: a79c7110e65e58546b4c72a791796c9d, type: 2}
+  - {fileID: 2100000, guid: 2d9245390d2201c44b634e8f1104bfe4, type: 2}
+  - {fileID: 2100000, guid: d1973ba07e37bcb4bb94ee13708a8510, type: 2}
   collision: {fileID: 8958718916949025284}
 --- !u!1 &8958718916949025284
 GameObject:

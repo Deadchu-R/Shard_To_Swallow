@@ -13,6 +13,7 @@ public class Ghost : MonoBehaviour
     {
         anim = gameObject.GetComponent<Animator>();
         sR = gameObject.GetComponent<SpriteRenderer>();
+   
     }
     private void Update()
     {
