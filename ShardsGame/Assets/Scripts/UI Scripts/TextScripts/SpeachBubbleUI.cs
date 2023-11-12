@@ -11,11 +11,10 @@ public class SpeachBubbleUI : MonoBehaviour
 {
     [SerializeField] private Button backButton;
     [SerializeField] private Button nextButton;
-    [SerializeField] private TextMeshProUGUI speechText;
     [SerializeField] private UI_Manager uiManager;
     [SerializeField] private Image NPCIcon;
     [SerializeField] private TextMeshProUGUI NPCName;
-    [SerializeField] private TypeWriterEffect typeWriterEffect;
+    [SerializeField] private SimpleTypeWriterEffect typeWriterEffect;
     private bool shouldEnableQuestionText = false;
     private string[] texts;
     private string questionText; 
@@ -34,16 +33,18 @@ public class SpeachBubbleUI : MonoBehaviour
     {
         uiManager.ClosePanel(0);
         uiManager.OpenPanel(2);
+        NextButtonInteractable(false);
         if (isDialogueActive) return;
         isDialogueActive = true;
         this.shouldEnableQuestionText = shouldEnableQuestionText;
         this.questionText = questionText;
-        this.texts = texts;
-        typeWriterEffect.ChangeText();
-        speechText.text = texts[0];
+        this.texts = texts; 
+        typeWriterEffect.SetText(texts[0]);
         
-        nextButton.gameObject.SetActive(true);
-        nextButton.onClick.AddListener(NextPage);
+        
+        
+        if (texts.Length > 1) nextButton.onClick.AddListener(NextPage);
+        else nextButton.onClick.AddListener(ClosePanel);
     }
 
     public void SetNPCInfo(Sprite NPCIcon, string NPCName, bool showIcon)
@@ -54,6 +55,10 @@ public class SpeachBubbleUI : MonoBehaviour
         this.NPCIcon.sprite = NPCIcon;
     }
 
+    public void NextButtonInteractable(bool interactable)
+    {
+        nextButton.interactable = interactable;
+    }
     public void SetLevelMove(int levelNumber, bool shouldMoveToLevel)
     {
         this.levelNum = levelNumber;
@@ -63,26 +68,32 @@ public class SpeachBubbleUI : MonoBehaviour
 
     private void NextPage()
     {
-        backButton.gameObject.SetActive(true);
-        backButton.interactable = true;
-        if (currentPage < texts.Length - 1)
-        {
-            currentPage++;
-            backButton.onClick.AddListener(LastPage);
-        }
-        speechText.text = texts[currentPage];
-        CheckLastPage();
+        NextButtonInteractable(false);
+       
+            backButton.interactable = true;
+            if (currentPage < texts.Length - 1)
+            {
+                currentPage++;
+                backButton.onClick.AddListener(LastPage);
+            }
+
+            typeWriterEffect.SetText(texts[currentPage]);
+            CheckLastPage();
+     
+
     }
 
     private void CheckLastPage()
     {
-        if (currentPage + 1 != texts.Length) return;
-        nextButton.onClick.AddListener(ClosePanel);
+        typeWriterEffect.StopText();
+        if (currentPage +1 != texts.Length) return;
         nextButton.onClick.RemoveListener(NextPage);
+        nextButton.onClick.AddListener(ClosePanel);
     }
 
     private void LastPage()
     {
+        typeWriterEffect.StopText();
         if (currentPage > 0)
         {
             currentPage--;
@@ -93,18 +104,17 @@ public class SpeachBubbleUI : MonoBehaviour
         {
             backButton.interactable = false;
         }
-
-        speechText.text = texts[currentPage];
+        typeWriterEffect.SetText(texts[currentPage]);
     }
 
     private void ClosePanel()
     {
-       
+       typeWriterEffect.StopText();
         if (shouldEnableQuestionText) uiManager.SetPlayerUIQuestionText(questionText);
         if (shouldMoveToLevel) SceneManager.LoadScene(levelNum);
         gameObject.SetActive(false);
         currentPage = 0;
-        speechText.text = texts[currentPage];
+        //typeWriterEffect.SetText(texts[currentPage]);
         nextButton.onClick.RemoveAllListeners();
         isDialogueActive = false;
     }
