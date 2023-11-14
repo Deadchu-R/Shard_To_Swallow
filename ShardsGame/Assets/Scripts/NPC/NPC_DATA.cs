@@ -19,10 +19,7 @@ public class NPC_DATA : MonoBehaviour
   [SerializeField] private Sprite NPCIcon;
   [SerializeField] private string NPCName;
   
- 
-
-
-
+  
   private void OnTriggerStay(Collider coll)
   {
     if (coll.CompareTag("Player") && Input.GetKey(KeyCode.E))
@@ -30,15 +27,7 @@ public class NPC_DATA : MonoBehaviour
       StartDialogue();
     }
   }
-
-  private void DebugText()
-  {
-    foreach ( string text in texts )
-    {
-      Debug.Log(text);
-    }
-  }
-
+  
   private void StartDialogue()
   {
     SetSpeechBubble();

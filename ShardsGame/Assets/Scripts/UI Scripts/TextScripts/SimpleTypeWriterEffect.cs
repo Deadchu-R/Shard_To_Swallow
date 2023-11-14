@@ -7,27 +7,37 @@ using UnityEngine.UI;
 
 public class SimpleTypeWriterEffect : MonoBehaviour
 {
-    [SerializeField] private float typingSpeed = 0.02f;
+    #region Required Components
+    [Header("Required Components:")]
     [SerializeField] private TextMeshProUGUI textMeshProUGUI;
-   [SerializeField] UnityEvent OnFinishedText = new UnityEvent();
+    #endregion
+    
+    #region TypeWriter Effect Variables
+    [Header("TypeWriter Effect Variables:")]
+    [SerializeField] private float typingSpeed = 0.02f;
+    #endregion
+    
+    #region Events
+    [Header("Events:")]
+    [SerializeField] UnityEvent OnFinishedText = new UnityEvent();
+    [SerializeField] UnityEvent OnLetterTyped = new UnityEvent();
+    #endregion
+    
     private string fullText;
     
     public void SetText(string text)
     {
         fullText = text;
-        textMeshProUGUI.text = ""; // Clear the text initially
+        textMeshProUGUI.text = ""; 
         StartCoroutine(TypeText());
     }
-    public bool CheckFinishedText()
+
+    private bool CheckFinishedText() // will check if type-writer finished to write the text
     {
-        if (textMeshProUGUI.text == fullText)
-        {
-            StopText();
-            Debug.Log("finishedtext");
-            OnFinishedText.Invoke();
-            return true;
-        }
-        return false;
+        if (textMeshProUGUI.text != fullText) return false;
+        StopText();
+        OnFinishedText.Invoke();
+        return true;
     }
     public void StopText()
     {
@@ -43,6 +53,7 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     {
         foreach (char c in fullText)
         {
+            OnLetterTyped.Invoke();
             textMeshProUGUI.text += c;
             CheckFinishedText(); 
             yield return new WaitForSeconds(typingSpeed);

@@ -1,20 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class SpeachBubbleUI : MonoBehaviour
 {
+    #region Buttons
+    [Header("Buttons")] 
+
     [SerializeField] private Button backButton;
     [SerializeField] private Button nextButton;
+    #endregion
+    
+    #region Speech Bubble UI Components
+    [Header("Speech Bubble UI Components")]
     [SerializeField] private UI_Manager uiManager;
     [SerializeField] private Image NPCIcon;
     [SerializeField] private TextMeshProUGUI NPCName;
+    #endregion
+    
+    #region Side Scripts
+    [Header("Side Scripts")]
     [SerializeField] private SimpleTypeWriterEffect typeWriterEffect;
+    #endregion
+    
     private bool shouldEnableQuestionText = false;
     private string[] texts;
     private string questionText; 
