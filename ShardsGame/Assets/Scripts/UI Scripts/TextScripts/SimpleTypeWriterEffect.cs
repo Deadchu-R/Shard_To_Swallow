@@ -21,6 +21,7 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     [Header("Events:")]
     [SerializeField] UnityEvent OnFinishedText = new UnityEvent();
     [SerializeField] UnityEvent OnLetterTyped = new UnityEvent();
+    [SerializeField] UnityEvent OnWordTyped = new UnityEvent();
     #endregion
     
     private string fullText;
@@ -53,6 +54,10 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     {
         foreach (char c in fullText)
         {
+            if (c == ' ')
+            {
+                OnWordTyped.Invoke();
+            }
             OnLetterTyped.Invoke();
             textMeshProUGUI.text += c;
             CheckFinishedText(); 

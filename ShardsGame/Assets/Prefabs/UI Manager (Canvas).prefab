@@ -676,6 +676,7 @@ MonoBehaviour:
   uiManager: {fileID: 4311909009628183072}
   NPCIcon: {fileID: 5132868259342696866}
   NPCName: {fileID: 2978382574989486909}
+  talkingIconSpeed: 0.5
   typeWriterEffect: {fileID: 4077229905818808203}
   currentPage: 0
 --- !u!114 &4077229905818808203
@@ -690,8 +691,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f24546dd041377f438056bbee3da86c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typingSpeed: 0.02
   textMeshProUGUI: {fileID: 5646325880119103148}
+  typingSpeed: 0.02
   OnFinishedText:
     m_PersistentCalls:
       m_Calls:
@@ -706,6 +707,24 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+  OnLetterTyped:
+    m_PersistentCalls:
+      m_Calls: []
+  OnWordTyped:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2165296284106594883}
+        m_TargetAssemblyTypeName: SpeachBubbleUI, Assembly-CSharp
+        m_MethodName: TalkAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!222 &3073291212525643217
 CanvasRenderer:

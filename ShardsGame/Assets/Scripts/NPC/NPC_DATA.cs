@@ -8,17 +8,21 @@ using UnityEngine.UI;
 
 public class NPC_DATA : MonoBehaviour
 {
-  [SerializeField] private string[] texts;
-  [SerializeField] private UI_Manager uiManager;
-  [SerializeField] private string questionString;
-  [SerializeField] private GameObject speechBubble;
-  [SerializeField] private bool shouldEnableQuestionText = false;
-  [SerializeField] private bool shouldMoveToLevel = false;
-  [SerializeField] private int levelToMoveTo = 0;
-  [SerializeField] private bool showIcon = false;
-  [SerializeField] private Sprite NPCIcon;
+  [Header("NPC ID Properties")]
   [SerializeField] private string NPCName;
-  
+  [SerializeField] private Sprite NPCIcon;
+  [SerializeField] private Sprite NPCTalkingIcon;
+  [SerializeField] private bool showIcon = false;
+  [SerializeField] private string[] texts;
+  [Header("NPC Components")]
+  [SerializeField] private UI_Manager uiManager;
+  [SerializeField] private GameObject speechBubble;
+  [Header("NPC Settings")]
+  [SerializeField] private bool shouldMoveToLevel = false;
+  [SerializeField] private bool shouldEnableQuestionText = false;
+  [SerializeField] private int levelToMoveTo = 0;
+  [SerializeField] private string questionString;
+
   
   private void OnTriggerStay(Collider coll)
   {
@@ -37,7 +41,7 @@ public class NPC_DATA : MonoBehaviour
   {
     SpeachBubbleUI speechBubbleScript = speechBubble.GetComponent<SpeachBubbleUI>(); 
     speechBubbleScript.SetLevelMove(levelToMoveTo, shouldMoveToLevel);
-    speechBubbleScript.SetNPCInfo(NPCIcon, NPCName,showIcon);
+    speechBubbleScript.SetNPCInfo(NPCIcon,NPCTalkingIcon, NPCName,showIcon);
     speechBubbleScript.SetTextSequence(texts, questionString, shouldEnableQuestionText);
   }
 }
