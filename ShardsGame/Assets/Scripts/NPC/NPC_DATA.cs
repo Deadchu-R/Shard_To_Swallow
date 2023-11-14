@@ -8,15 +8,11 @@ using UnityEngine.UI;
 
 public class NPC_DATA : MonoBehaviour
 {
-  [Header("NPC ID Properties")]
-  [SerializeField] private string NPCName;
-  [SerializeField] private Sprite NPCIcon;
-  [SerializeField] private Sprite NPCTalkingIcon;
-  [SerializeField] private bool showIcon = false;
-  [SerializeField] private string[] texts;
+  [Header("NPC ID Properties")] 
+  [SerializeField] private Sheet sheet;
   [Header("NPC Components")]
-  [SerializeField] private UI_Manager uiManager;
-  [SerializeField] private GameObject speechBubble;
+  [SerializeField] private NPC_UI_Handler NPC_UIHandler;
+  
   [Header("NPC Settings")]
   [SerializeField] private bool shouldMoveToLevel = false;
   [SerializeField] private bool shouldEnableQuestionText = false;
@@ -28,20 +24,13 @@ public class NPC_DATA : MonoBehaviour
   {
     if (coll.CompareTag("Player") && Input.GetKey(KeyCode.E))
     {
-      StartDialogue();
+      StartNPCAction();
     }
   }
   
-  private void StartDialogue()
+  private void StartNPCAction()
   {
-    SetSpeechBubble();
-    uiManager.OpenPanel(2);
+    NPC_UIHandler.StartDialogue(sheet);
   }
-  private void SetSpeechBubble()
-  {
-    SpeachBubbleUI speechBubbleScript = speechBubble.GetComponent<SpeachBubbleUI>(); 
-    speechBubbleScript.SetLevelMove(levelToMoveTo, shouldMoveToLevel);
-    speechBubbleScript.SetNPCInfo(NPCIcon,NPCTalkingIcon, NPCName,showIcon);
-    speechBubbleScript.SetTextSequence(texts, questionString, shouldEnableQuestionText);
-  }
+
 }
