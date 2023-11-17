@@ -7,45 +7,60 @@ using UnityEngine.SceneManagement;
 public class SpeachBubbleUI : MonoBehaviour
 {
     #region Buttons
-    [Header("Buttons")]
-    [SerializeField] private Button backButton;
+
+    [Header("Buttons")] [SerializeField] private Button backButton;
     [SerializeField] private Button nextButton;
+
     #endregion
 
     #region Speech Bubble UI Components
+
     [Header("Speech Bubble UI Components")] [SerializeField]
-    private UI_Manager uiManager;
-    [SerializeField] private Image NPCIcon;
+    private Image NPCIcon;
+
     [SerializeField] private TextMeshProUGUI NPCName;
+
     #endregion
 
     [Header("SpeechBubble Settings")] [SerializeField]
     private Sprite NPCIconSprite;
+
     private Sprite NPCTalkingIconSprite;
 
     #region Side Scripts
-    [Header("Side Scripts")]
-    [SerializeField] private SimpleTypeWriterEffect typeWriterEffect;
+
+    [Header("Side Scripts")] [SerializeField]
+    private SimpleTypeWriterEffect typeWriterEffect;
+
+    [SerializeField] private DialougeOptions dialogueOptionsScript;
+
     #endregion
-    
+
     private Page[] pages;
     private string questionText;
     private int currentPage = 0;
-    
+
     private bool isDialogueActive = false;
     private bool isTalkingIconDisplayed = false;
 
-    
+
     private void SetTextSequence()
     {
+        Debug.Log(pages[currentPage].Text);
         NextButtonInteractable(false);
         if (isDialogueActive) return;
         isDialogueActive = true;
-        
-        this.pages = pages;
-        typeWriterEffect.SetText(pages[0]);
+        SetPage();
         if (pages.Length > 1) nextButton.onClick.AddListener(NextPage);
         else nextButton.onClick.AddListener(ClosePanel);
+    }
+
+    private void SetDialogueOptions()
+    {
+        if (pages[currentPage] is DialoguePage && pages[currentPage] != null)
+        {
+            dialogueOptionsScript.SetDialougeOptions(pages[currentPage] as DialoguePage);
+        }
     }
 
     public void SetSheetUI(Sheet sheet)
@@ -54,10 +69,26 @@ public class SpeachBubbleUI : MonoBehaviour
         SetNPCInfo();
         SetTextSequence();
     }
+    public void SetSheetUI(Page[] pages, int currentPage)
+    {
+        ResetBubble();
+        this.pages = pages;
+        this.currentPage = currentPage;
+        SetTextSequence();
+    }
+
+
+    private void SetPage()
+    {
+        SetNPCInfo();
+        SetDialogueOptions();
+        typeWriterEffect.SetText(pages[currentPage]);
+    }
 
     private void SetNPCInfo()
     {
-           this.NPCName.text = pages[currentPage].NPCInfo.Name;
+       
+        this.NPCName.text = pages[currentPage].NPCInfo.Name;
         if (!pages[currentPage].NPCInfo.ShowIcon) this.NPCIcon.gameObject.SetActive(false);
         else
         {
@@ -70,7 +101,7 @@ public class SpeachBubbleUI : MonoBehaviour
     public void TalkAnimation()
     {
         if (!pages[currentPage].NPCInfo.ShowIcon) return;
-     
+
         if (this.NPCIcon.sprite == NPCIconSprite)
         {
             this.NPCIcon.sprite = NPCTalkingIconSprite;
@@ -82,13 +113,13 @@ public class SpeachBubbleUI : MonoBehaviour
             isTalkingIconDisplayed = false;
         }
     }
-    
+
     public void NextButtonInteractable(bool interactable)
     {
         nextButton.interactable = interactable;
     }
-    
-    private void NextPage()
+
+    public void NextPage()
     {
         NextButtonInteractable(false);
 
@@ -98,8 +129,8 @@ public class SpeachBubbleUI : MonoBehaviour
             currentPage++;
             backButton.onClick.AddListener(LastPage);
         }
-        SetNPCInfo();
-        typeWriterEffect.SetText(pages[currentPage]);
+
+        SetPage();
         CheckLastPage();
     }
 
@@ -125,21 +156,25 @@ public class SpeachBubbleUI : MonoBehaviour
             backButton.interactable = false;
         }
 
-        typeWriterEffect.SetText(pages[currentPage]);
+        SetPage();
     }
 
     private void ClosePanel()
     {
-        typeWriterEffect.StopText();
-        
-        if (pages[currentPage].QuestionText != null) uiManager.SetPlayerUIQuestionText(pages[currentPage].QuestionText);
-        Debug.Log(pages[currentPage].levelToMoveTo);
-        if (pages[currentPage].levelToMoveTo != -1 && pages[currentPage].levelToMoveTo != null) GameManager.Instance.MoveToScene(pages[currentPage].levelToMoveTo);
+       
+        // typeWriterEffect.StopText();
+        // currentPage = 0;
+        // nextButton.onClick.RemoveAllListeners();
+        // isDialogueActive = false;
+        ResetBubble();
         
         pages[currentPage].FinishedPage();
         gameObject.SetActive(false);
+    }
+    private void ResetBubble()
+    {
+        typeWriterEffect.StopText();
         currentPage = 0;
-;
         nextButton.onClick.RemoveAllListeners();
         isDialogueActive = false;
     }

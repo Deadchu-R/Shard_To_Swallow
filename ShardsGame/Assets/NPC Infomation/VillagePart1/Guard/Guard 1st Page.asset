@@ -14,3 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NPCInfo: {fileID: 11400000, guid: 128c00755b1a1d245a919cbb586f8dc1, type: 2}
   Text: Under my guard this place will remain one of the safest places on earth
+  QuestionText: 
+  OnFinishedPage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8946652092753496835, guid: f93285ed4b781c24b9b6be4790c52512, type: 3}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: PageAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

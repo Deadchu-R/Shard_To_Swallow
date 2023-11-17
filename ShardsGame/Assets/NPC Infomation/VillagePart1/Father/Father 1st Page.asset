@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NPCInfo: {fileID: 11400000, guid: 1ab2a63833d11e94d8fcd4d1d252d815, type: 2}
   Text: Now that's a face I haven't seen in a while!
+  QuestionText: 
+  levelToMoveTo: -1
+  OnFinishedPage:
+    m_PersistentCalls:
+      m_Calls: []

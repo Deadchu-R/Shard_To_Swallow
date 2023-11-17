@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     //[SerializeField] float TimerSeconds = 60f;
+    [SerializeField] UI_Manager _uiManager;
     public static GameManager Instance { get; private set; }
 
     private void Awake()
@@ -29,10 +30,29 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(3);
     }
-    public void MoveToScene(int sceneIndex)
+
+    public void PageAction(Page page)
     {
-        SceneManager.LoadScene(sceneIndex);
+        switch (page)
+        {
+            case PageToMoveLevel levelPage:
+                MoveToScene(levelPage.levelToMoveTo);
+                break;
+
+            default:
+                break;
+        }
+
+        if (!string.IsNullOrEmpty(page.QuestionText)) _uiManager.SetPlayerUIQuestionText(page.QuestionText);
+        
     }
 
 
+
+
+public void MoveToScene(int sceneIndex)
+{
+    if (sceneIndex < 0) return;
+    SceneManager.LoadScene(sceneIndex);
+}
 }
