@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129b660f26d5b094296b83acd285eff9, type: 3}
-  m_Name: PlayerTest
-  m_EditorClassIdentifier: 
-  NPCInfo: {fileID: 11400000, guid: cf2863a9c1e930c43a845995d17a21c5, type: 2}
-  Text: Hy, i am Player
+  m_Script: {fileID: 0}
+  m_Name: Op3
+  m_EditorClassIdentifier: Assembly-CSharp::DefaultPage
+  NPCInfo: {fileID: 11400000, guid: 1ab2a63833d11e94d8fcd4d1d252d815, type: 2}
+  Text: Father
   QuestionText: 
-  levelToMoveTo: -1
   OnFinishedPage:
     m_PersistentCalls:
       m_Calls: []

@@ -12,13 +12,12 @@ public class DialougeOptions : MonoBehaviour
     [SerializeField] private SpeachBubbleUI speechBubbleScript;
     private Page[] pages;
 
+
     public void SetDialougeOptions(DialoguePage page)
     {
         pages = page.Pages;
-        Debug.Log(pages[0].Text);
-        
         SetButtons(page);
-        gameObject.SetActive(true);
+        SetActive(true);
     }
 
     private void SetButtons(DialoguePage page)
@@ -31,17 +30,21 @@ public class DialougeOptions : MonoBehaviour
         }
     }
 
+
+    public void SetActive(bool activeState)
+    {
+        gameObject.SetActive(activeState);
+    }
+
     public void UseOption(int optionIndex)
     {
-       // this.pages[0] = pages[optionIndex];
-         
-        //Sheet sheet = new Sheet();
-        //sheet.pages = pages;
-        // Debug.Log(sheet.pages[optionIndex].Text);
-        Page[] newPages = pages; 
-       //newPages[]
-        speechBubbleScript.SetSheetUI(pages, optionIndex);
-        //speechBubbleScript.SetPageUI();
-        gameObject.SetActive(false);
+        //Page[] newPages = new Page[1];
+        Sheet sheet = new Sheet(1);
+        sheet.pages = new Page[1];
+        sheet.pages[0] = pages[optionIndex];
+        //sheet.pages[0] = newPages[optionIndex];
+       // sheet.pages = newPages;
+        speechBubbleScript.SetNewSheetUI(sheet);
+        SetActive(false);
     }
 }

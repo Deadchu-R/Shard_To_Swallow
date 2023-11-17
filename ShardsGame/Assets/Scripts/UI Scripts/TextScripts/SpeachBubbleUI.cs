@@ -1,5 +1,8 @@
+using System;
 using TMPro;
 using System.Collections;
+using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -38,69 +41,94 @@ public class SpeachBubbleUI : MonoBehaviour
 
     private Page[] pages;
     private string questionText;
-    private int currentPage = 0;
+    private int currentPageIndex = 0;
+    private Page lastPage; 
+    [SerializeField] private Page currentPage;
+   [SerializeField] private Sheet currentSheet;
+    private Sheet lastSheet;
 
     private bool isDialogueActive = false;
     private bool isTalkingIconDisplayed = false;
 
-
-    private void SetTextSequence()
+    public void SetSheetUI(Sheet sheet, int pageIndex = 0)
     {
-        Debug.Log(pages[currentPage].Text);
+        currentSheet = sheet;
+        this.pages = sheet.pages;
+        SetTextSequence( pageIndex);
+    }
+
+    public void SetNewSheetUI(Sheet sheet, int pageIndex = 0)
+    {
+        currentPageIndex = pageIndex;
+        Debug.Log("did set the new sheet");
+         lastPage = currentPage;
+         lastSheet = currentSheet;
+        //currentPage = sheet.pages[pageIndex];
+      //  currentSheet = sheet;
+        ResetBubble();
+        SetSheetUI(sheet, pageIndex);
+    }
+
+    private void SetTextSequence(int pageIndex = 0)
+    {
         NextButtonInteractable(false);
         if (isDialogueActive) return;
         isDialogueActive = true;
-        SetPage();
+        currentPage = pages[pageIndex];
+        SetPage(currentPage);
         if (pages.Length > 1) nextButton.onClick.AddListener(NextPage);
         else nextButton.onClick.AddListener(ClosePanel);
     }
 
-    private void SetDialogueOptions()
+    private void SetPage(Page pageToSet)
     {
-        if (pages[currentPage] is DialoguePage && pages[currentPage] != null)
-        {
-            dialogueOptionsScript.SetDialougeOptions(pages[currentPage] as DialoguePage);
-        }
-    }
-
-    public void SetSheetUI(Sheet sheet)
-    {
-        this.pages = sheet.pages;
+        currentPage = pageToSet;
         SetNPCInfo();
-        SetTextSequence();
-    }
-    public void SetSheetUI(Page[] pages, int currentPage)
-    {
-        ResetBubble();
-        this.pages = pages;
-        this.currentPage = currentPage;
-        SetTextSequence();
-    }
-
-
-    private void SetPage()
-    {
-        SetNPCInfo();
-        SetDialogueOptions();
-        typeWriterEffect.SetText(pages[currentPage]);
+        PageActions(currentPage);
+        typeWriterEffect.SetText(currentPage);
     }
 
     private void SetNPCInfo()
     {
-       
-        this.NPCName.text = pages[currentPage].NPCInfo.Name;
-        if (!pages[currentPage].NPCInfo.ShowIcon) this.NPCIcon.gameObject.SetActive(false);
+        this.NPCName.text = currentPage.NPCInfo.Name;
+        if (!currentPage.NPCInfo.ShowIcon) this.NPCIcon.gameObject.SetActive(false);
         else
         {
-            NPCIconSprite = pages[currentPage].NPCInfo.Icon;
-            NPCTalkingIconSprite = pages[currentPage].NPCInfo.TalkingIcon;
-            this.NPCIcon.sprite = pages[currentPage].NPCInfo.Icon;
+            NPCIconSprite = currentPage.NPCInfo.Icon;
+            NPCTalkingIconSprite = currentPage.NPCInfo.TalkingIcon;
+            this.NPCIcon.sprite = currentPage.NPCInfo.Icon;
         }
     }
 
+    private void SetDialogueOptions(DialoguePage page)
+    {
+        dialogueOptionsScript.SetDialougeOptions(page);
+    }
+
+    private void PageActions(Page page)
+    {
+        switch (page)
+        {
+            case DefaultPage:
+                CloseNonDefaultPageActions();
+                break;
+            case DialoguePage dialoguePage:
+                SetDialogueOptions(dialoguePage);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void CloseNonDefaultPageActions()
+    {
+        dialogueOptionsScript.SetActive(false);
+    }
+
+
     public void TalkAnimation()
     {
-        if (!pages[currentPage].NPCInfo.ShowIcon) return;
+        if (!currentPage.NPCInfo.ShowIcon) return;
 
         if (this.NPCIcon.sprite == NPCIconSprite)
         {
@@ -119,63 +147,89 @@ public class SpeachBubbleUI : MonoBehaviour
         nextButton.interactable = interactable;
     }
 
-    public void NextPage()
+    private void NextPage()
     {
+        typeWriterEffect.StopText();
         NextButtonInteractable(false);
 
         backButton.interactable = true;
-        if (currentPage < pages.Length - 1)
+        if (currentPageIndex < pages.Length - 1)
         {
-            currentPage++;
+            currentPageIndex++;
             backButton.onClick.AddListener(LastPage);
         }
 
-        SetPage();
-        CheckLastPage();
+        lastPage = currentPage;
+        currentPage = pages[currentPageIndex];
+        if (currentSheet.ContainsPage(currentPage))
+        {
+            isLastPage();
+            SetPage(currentPage);
+        }
+
+        else if (lastSheet != null)
+        {
+            SetNewSheetUI(lastSheet);
+        }
     }
 
-    private void CheckLastPage()
+    private void isLastPage()
     {
         typeWriterEffect.StopText();
-        if (currentPage + 1 != pages.Length) return;
-        nextButton.onClick.RemoveListener(NextPage);
-        nextButton.onClick.AddListener(ClosePanel);
+        if (currentPageIndex + 1 >= pages.Length)
+        {
+            nextButton.onClick.RemoveListener(NextPage);
+            nextButton.onClick.AddListener(ClosePanel);
+        }
     }
 
     private void LastPage()
     {
+        nextButton.onClick.RemoveListener(ClosePanel);
         typeWriterEffect.StopText();
-        if (currentPage > 0)
+        if (currentPageIndex > 0)
         {
-            currentPage--;
+            currentPageIndex--;
             nextButton.onClick.AddListener(NextPage);
         }
 
-        if (currentPage == 0)
+        if (currentPageIndex == 0)
         {
             backButton.interactable = false;
+            currentPageIndex = 0;
         }
 
-        SetPage();
+        currentPage = pages[currentPageIndex];
+        // SetPage(lastPage);
+        if (currentSheet.ContainsPage(lastPage))
+        {
+            SetPage(lastPage);
+        }
+        else if (lastSheet != null)
+        {
+            int pageIndex = Array.IndexOf(lastSheet.pages, lastPage);
+            if (pageIndex > 0) backButton.interactable = true;
+            Debug.Log("page index is:" + pageIndex);
+            SetNewSheetUI(lastSheet, pageIndex);
+        }
+        //lastPage = currentPage;
+  
     }
 
     private void ClosePanel()
     {
-       
-        // typeWriterEffect.StopText();
-        // currentPage = 0;
-        // nextButton.onClick.RemoveAllListeners();
-        // isDialogueActive = false;
+        Debug.Log("close");
         ResetBubble();
-        
-        pages[currentPage].FinishedPage();
+        currentPage.FinishedPage();
         gameObject.SetActive(false);
     }
+
     private void ResetBubble()
     {
         typeWriterEffect.StopText();
-        currentPage = 0;
+        currentPageIndex = 0;
         nextButton.onClick.RemoveAllListeners();
         isDialogueActive = false;
     }
+    
 }

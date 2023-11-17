@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129b660f26d5b094296b83acd285eff9, type: 3}
-  m_Name: Op1Page
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 0}
+  m_Name: PlayerTestPage
+  m_EditorClassIdentifier: Assembly-CSharp::DefaultPage
   NPCInfo: {fileID: 11400000, guid: cf2863a9c1e930c43a845995d17a21c5, type: 2}
-  Text: it a me, Option 1!
+  Text: i am player
   QuestionText: 
   OnFinishedPage:
     m_PersistentCalls:

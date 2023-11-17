@@ -5,7 +5,6 @@ using UnityEngine.Events;
 [System.Serializable]
 public class PageEvent : UnityEvent<Page> { }
 
-[CreateAssetMenu(fileName = "New Page", menuName = "Page/defualtPage")]
 public class Page : ScriptableObject
 {
  public NPC_ID NPCInfo;
@@ -20,6 +19,11 @@ public class Page : ScriptableObject
  
 }
 
+[CreateAssetMenu(fileName = "New Page", menuName = "Page/defualtPage")]
+public class DefaultPage : Page
+{
+ 
+}
 [CreateAssetMenu(fileName = "New Page", menuName = "Page/LevelPage")]
 public class PageToMoveLevel : Page
 {
