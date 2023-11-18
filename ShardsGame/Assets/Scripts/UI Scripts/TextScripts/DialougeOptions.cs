@@ -44,7 +44,7 @@ public class DialougeOptions : MonoBehaviour
         sheet.pages[0] = pages[optionIndex];
         //sheet.pages[0] = newPages[optionIndex];
        // sheet.pages = newPages;
-        speechBubbleScript.SetNewSheetUI(sheet);
+        speechBubbleScript.SetSheetUI(sheet);
         SetActive(false);
     }
 }

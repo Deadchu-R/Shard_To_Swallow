@@ -14,7 +14,12 @@ public class Page : ScriptableObject
   onFinishedPage.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().PageAction);
   onFinishedPage.Invoke(this);
  }
- 
+
+ public virtual void SetPage()
+ {
+  
+ }
+
 }
 
 

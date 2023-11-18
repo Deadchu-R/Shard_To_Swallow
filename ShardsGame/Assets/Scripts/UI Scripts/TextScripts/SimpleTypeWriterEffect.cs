@@ -28,6 +28,7 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     
     public void SetText(Page page)
     {
+        //StopText();
         fullText = page.Text;
         textMeshProUGUI.text = ""; 
         StartCoroutine(TypeText());

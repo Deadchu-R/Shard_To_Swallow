@@ -12,18 +12,23 @@ public class NPC_DATA : MonoBehaviour
   [SerializeField] private Sheet sheet;
   [Header("NPC Components")]
   [SerializeField] private NPC_UI_Handler NPC_UIHandler;
+  private bool isInteractionStarted = false;
   
   private void OnTriggerStay(Collider coll)
   {
-    if (coll.CompareTag("Player") && Input.GetKey(KeyCode.E))
+    if (coll.CompareTag("Player") && Input.GetKey(KeyCode.E) && !isInteractionStarted)
     {
+      SetIsNpcInteractionStarted(true);
       StartNPCAction();
     }
   }
-  
+  public void SetIsNpcInteractionStarted(bool state)
+  {
+    isInteractionStarted = state;
+  }
   private void StartNPCAction()
   {
-    NPC_UIHandler.StartDialogue(sheet);
+    NPC_UIHandler.StartDialogue(sheet, this);
   }
 
 }

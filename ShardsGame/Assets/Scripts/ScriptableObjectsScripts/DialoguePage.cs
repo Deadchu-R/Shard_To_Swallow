@@ -7,5 +7,8 @@ public class DialoguePage : Page
 {
     public string[] Options;
     public Page[] Pages;
- 
+    public override void SetPage()
+    {
+        base.SetPage();
+    }
 }
