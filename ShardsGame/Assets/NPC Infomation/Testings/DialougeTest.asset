@@ -9,13 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 255fc9c299992e547b2ca5b0e395825d, type: 3}
-  m_Name: OP2
+  m_Script: {fileID: 11500000, guid: d41a4bb2a87709145a726daf1fa656a4, type: 3}
+  m_Name: DialougeTest
   m_EditorClassIdentifier: 
   NPCInfo: {fileID: 11400000, guid: 128c00755b1a1d245a919cbb586f8dc1, type: 2}
-  Text: gUard
+  Text: Options test
   QuestionText: 
   onFinishedPage:
     m_PersistentCalls:
       m_Calls: []
-  test: 0
+  Options:
+  - Player
+  - Guard
+  - Father
+  Pages:
+  - {fileID: 11400000, guid: 78d5d4247f0276b478accc1ab8f8734a, type: 2}
+  - {fileID: 11400000, guid: 03a387741c6df5c40b5597573a2a63bc, type: 2}
+  - {fileID: 11400000, guid: 77b213ec3cf6ee74fa3b9b74c80bc018, type: 2}

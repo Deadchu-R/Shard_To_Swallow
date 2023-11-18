@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DialougeSheet
   m_EditorClassIdentifier: 
   pages:
-  - {fileID: 11400000, guid: 095be65ce86ee30448882e5658dd7121, type: 2}
-  - {fileID: 11400000, guid: b98213912aad1b2439984613986b1353, type: 2}
+  - {fileID: 11400000, guid: e2bb081e97f6e724ea0525ec98c1e142, type: 2}
+  - {fileID: 11400000, guid: 343515d393b1e244aa13b38dd3b466cf, type: 2}

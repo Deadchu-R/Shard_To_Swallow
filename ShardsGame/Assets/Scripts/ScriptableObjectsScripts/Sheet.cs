@@ -28,7 +28,6 @@ public class Sheet : ScriptableObject
    }
    public void SetPages(Page[] newPages)
    {
-      
       pages = newPages;
    }
  
