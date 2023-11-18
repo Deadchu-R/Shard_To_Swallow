@@ -80,7 +80,7 @@ public class SpeachBubbleUI : MonoBehaviour
         }
 
         currentSheet = sheet;
-        this.pages = sheet.pages;
+        pages = sheet.pages;
         SetTextSequence(pageIndex);
     }
 
@@ -143,8 +143,6 @@ public class SpeachBubbleUI : MonoBehaviour
     public void FinishedTyping()
     {
         PageActions(currentPage);
-        //  if (lastSheet != null) return;
-        // NextButtonInteractable(true);
     }
 
     /// <summary>
@@ -165,11 +163,9 @@ public class SpeachBubbleUI : MonoBehaviour
                 {
                     NextButtonInteractable(false);
                 }
-
                 CloseNonDefaultPageActions();
-
-
                 break;
+            
             case DialoguePage dialoguePage:
                 SetDialogueOptions(dialoguePage);
                 NextButtonInteractable(false); // At DialoguePage the next will be disabled
@@ -200,14 +196,14 @@ public class SpeachBubbleUI : MonoBehaviour
     {
         if (!currentPage.NPCInfo.ShowIcon) return;
 
-        if (this.NPCIcon.sprite == NPCIconSprite)
+        if (NPCIcon.sprite == NPCIconSprite)
         {
-            this.NPCIcon.sprite = NPCTalkingIconSprite;
+            NPCIcon.sprite = NPCTalkingIconSprite;
             isTalkingIconDisplayed = true;
         }
         else
         {
-            this.NPCIcon.sprite = NPCIconSprite;
+            NPCIcon.sprite = NPCIconSprite;
             isTalkingIconDisplayed = false;
         }
     }
@@ -228,7 +224,7 @@ public class SpeachBubbleUI : MonoBehaviour
     {
         NextButtonInteractable(false);
         backButton.interactable = true;
-        if (currentPageIndex < pages.Length - 1) //check if there is a next page in this sheet
+        if (currentPageIndex < pages.Length - 1) //check if index wont be out of range
         {
             currentPageIndex++;
             backButton.onClick.AddListener(PreviousPage);
@@ -294,6 +290,7 @@ public class SpeachBubbleUI : MonoBehaviour
             lastPage = currentSheet.pages[pageIndex];
             if (pageIndex > 0) backButton.interactable = true;
             SetSheetUI(lastSheet, npc, pageIndex);
+            currentPageIndex = pageIndex;
         }
     }
 
