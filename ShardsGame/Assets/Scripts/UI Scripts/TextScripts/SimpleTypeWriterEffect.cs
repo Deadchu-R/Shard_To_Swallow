@@ -28,7 +28,7 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     
     public void SetText(Page page)
     {
-        //StopText();
+        StopText();
         fullText = page.Text;
         textMeshProUGUI.text = ""; 
         StartCoroutine(TypeText());
@@ -41,7 +41,7 @@ public class SimpleTypeWriterEffect : MonoBehaviour
         OnFinishedText.Invoke();
         return true;
     }
-    public void StopText()
+    private void StopText()
     {
         StopCoroutine(TypeText());
     }

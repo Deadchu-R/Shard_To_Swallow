@@ -18,6 +18,7 @@ public class DialougeOptions : MonoBehaviour
         pages = page.Pages;
         SetButtons(page);
         SetActive(true);
+        speechBubbleScript.NextButtonInteractable(false);
     }
 
     private void SetButtons(DialoguePage page)
@@ -42,8 +43,6 @@ public class DialougeOptions : MonoBehaviour
         Sheet sheet = new Sheet(1);
         sheet.pages = new Page[1];
         sheet.pages[0] = pages[optionIndex];
-        //sheet.pages[0] = newPages[optionIndex];
-       // sheet.pages = newPages;
         speechBubbleScript.SetSheetUI(sheet);
         SetActive(false);
     }

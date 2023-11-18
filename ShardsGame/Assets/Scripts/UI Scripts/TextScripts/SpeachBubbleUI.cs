@@ -44,12 +44,15 @@ public class SpeachBubbleUI : MonoBehaviour
 
     private Page[] pages;
     private string questionText;
-    private int currentPageIndex = 0;
-    private Page lastPage;
     private NPC_DATA npc;
+
+    [Header("for testing only")] [SerializeField]
+    private int currentPageIndex = 0;
+
     [SerializeField] private Page currentPage;
+    [SerializeField] private Page lastPage;
     [SerializeField] private Sheet currentSheet;
-    private Sheet lastSheet;
+    [SerializeField] private Sheet lastSheet;
 
     private bool isDialogueActive = false;
     private bool isTalkingIconDisplayed = false;
@@ -67,11 +70,12 @@ public class SpeachBubbleUI : MonoBehaviour
             lastSheet = currentSheet;
             ResetBubble();
         }
+
         currentSheet = sheet;
         this.pages = sheet.pages;
         SetTextSequence(pageIndex);
     }
-    
+
     private void SetTextSequence(int pageIndex = 0)
     {
         NextButtonInteractable(false);
@@ -85,6 +89,7 @@ public class SpeachBubbleUI : MonoBehaviour
 
     private void SetPage(Page pageToSet)
     {
+        currentPageIndex = Array.IndexOf(currentSheet.pages, pageToSet);
         currentPage = pageToSet;
         SetNPCInfo();
         PageActions(currentPage);
@@ -108,15 +113,38 @@ public class SpeachBubbleUI : MonoBehaviour
         dialogueOptionsScript.SetDialougeOptions(page);
     }
 
+    public void FinishedTyping()
+    {
+        PageActions(currentPage);
+        //  if (lastSheet != null) return;
+        // NextButtonInteractable(true);
+    }
+
     private void PageActions(Page page)
     {
         switch (page)
         {
             case DefaultPage:
+                if (currentPageIndex + 1 < currentSheet.pages.Length)
+                {
+                    NextButtonInteractable(true);
+                }
+                else
+                {
+                    NextButtonInteractable(false);
+                }
                 CloseNonDefaultPageActions();
+
+
                 break;
             case DialoguePage dialoguePage:
                 SetDialogueOptions(dialoguePage);
+                NextButtonInteractable(false);
+                if (currentPageIndex > 0 || lastSheet != null)
+                {
+                    backButton.interactable = true;
+                }
+
                 break;
             default:
                 break;
@@ -152,9 +180,7 @@ public class SpeachBubbleUI : MonoBehaviour
 
     private void NextPage()
     {
-        typeWriterEffect.StopText();
         NextButtonInteractable(false);
-
         backButton.interactable = true;
         if (currentPageIndex < pages.Length - 1)
         {
@@ -162,10 +188,10 @@ public class SpeachBubbleUI : MonoBehaviour
             backButton.onClick.AddListener(PreviousPage);
         }
 
-        lastPage = currentPage;
         currentPage = pages[currentPageIndex];
         if (currentSheet.ContainsPage(currentPage))
         {
+            lastPage = currentPage;
             isLastPage();
             SetPage(currentPage);
         }
@@ -178,7 +204,6 @@ public class SpeachBubbleUI : MonoBehaviour
 
     private void isLastPage()
     {
-        typeWriterEffect.StopText();
         if (currentPageIndex + 1 >= pages.Length)
         {
             nextButton.onClick.RemoveListener(NextPage);
@@ -189,7 +214,7 @@ public class SpeachBubbleUI : MonoBehaviour
     private void PreviousPage()
     {
         nextButton.onClick.RemoveListener(ClosePanel);
-        typeWriterEffect.StopText();
+
         if (currentPageIndex > 0)
         {
             currentPageIndex--;
@@ -202,17 +227,24 @@ public class SpeachBubbleUI : MonoBehaviour
             currentPageIndex = 0;
         }
 
-        currentPage = pages[currentPageIndex];
+        int pageIndex = 0;
         if (currentSheet.ContainsPage(lastPage))
         {
+            pageIndex = currentPageIndex;
+            currentPage = pages[currentPageIndex];
+            lastPage = currentSheet.pages[pageIndex];
+            Debug.Log("contains " + lastPage.Text);
             SetPage(lastPage);
         }
-        else if (lastSheet != null)
+        else if (lastSheet != null && lastSheet != currentSheet)
         {
-            int pageIndex = Array.IndexOf(lastSheet.pages, lastPage);
+            currentSheet = lastSheet;
+            //pageIndex = Array.IndexOf(lastSheet.pages, lastPage);
+            pageIndex = lastSheet.pages.Length - 1;
+            lastPage = currentSheet.pages[pageIndex];
             if (pageIndex > 0) backButton.interactable = true;
-            Debug.Log("page index is:" + pageIndex);
-            SetSheetUI(lastSheet,npc, pageIndex);
+            Debug.Log("not null " + lastPage.Text);
+            SetSheetUI(lastSheet, npc, pageIndex);
         }
     }
 
@@ -228,7 +260,6 @@ public class SpeachBubbleUI : MonoBehaviour
 
     private void ResetBubble()
     {
-        typeWriterEffect.StopText();
         currentSheet = null;
         currentPageIndex = 0;
         nextButton.onClick.RemoveAllListeners();
