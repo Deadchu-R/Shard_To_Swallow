@@ -15,6 +15,7 @@ public class FourDirectionalMovement : MonoBehaviour
     public GameObject playerRef;
     public Animator anim;
     public SpriteRenderer sR;
+    private bool canUseInputs = true;
 
 
 
@@ -24,6 +25,12 @@ public class FourDirectionalMovement : MonoBehaviour
         sR = playerRef.GetComponent<SpriteRenderer>();
     }
     private void Update()
+    {
+       if (canUseInputs) Inputs();
+       else anim.StopRecording();
+    }
+
+    private void Inputs()
     {
         AnimeBoolSys();
 
@@ -57,6 +64,12 @@ public class FourDirectionalMovement : MonoBehaviour
             }
         }
 
+    }
+
+    public void SetCanUseInputsBool(bool state)
+    {
+        canUseInputs = state;
+        
     }
 
     private void AnimeBoolSys()
