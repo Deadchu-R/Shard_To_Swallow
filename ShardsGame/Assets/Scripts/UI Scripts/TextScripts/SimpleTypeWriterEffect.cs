@@ -26,6 +26,10 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     
     private string fullText;
     
+    /// <summary>
+    ///  will set the text to the textMeshProUGUI component
+    /// </summary>
+    /// <param name="page">taking info from page.Text</param>
     public void SetText(Page page)
     {
         StopText();
@@ -34,6 +38,10 @@ public class SimpleTypeWriterEffect : MonoBehaviour
         StartCoroutine(TypeText());
     }
 
+    /// <summary>
+    ///  will check if finished typing the text then invoke the OnFinishedText event
+    /// </summary>
+    /// <returns></returns>
     private bool CheckFinishedText() // will check if type-writer finished to write the text
     {
         if (textMeshProUGUI.text != fullText) return false;
@@ -41,16 +49,29 @@ public class SimpleTypeWriterEffect : MonoBehaviour
         OnFinishedText.Invoke();
         return true;
     }
+    
+    /// <summary>
+    /// will stop the typing Corutine immediately
+    /// </summary>
     private void StopText()
     {
         StopCoroutine(TypeText());
     }
 
+    /// <summary>
+    /// Skipping the setting Finale Text
+    /// </summary>
     public void SetFinaleText()
     { 
         textMeshProUGUI.text = fullText;   
     }
 
+    /// <summary>
+    ///  will start the typing Corutine
+    /// Invoking the OnLetterTyped event each letter typed
+    /// Invoking the OnWordTyped event each word typed
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator TypeText()
     {
         foreach (char c in fullText)

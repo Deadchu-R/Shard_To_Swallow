@@ -22,10 +22,19 @@ public class NPC_DATA : MonoBehaviour
       StartNPCAction();
     }
   }
+  
+  /// <summary>
+  ///  will set the state of the npc interaction to true or false according to the state
+  /// </summary>
+  /// <param name="state"></param>
   public void SetIsNpcInteractionStarted(bool state)
   {
     isInteractionStarted = state;
   }
+  
+  /// <summary>
+  ///  will start the npc action
+  /// </summary>
   private void StartNPCAction()
   {
     NPC_UIHandler.StartDialogue(sheet, this);

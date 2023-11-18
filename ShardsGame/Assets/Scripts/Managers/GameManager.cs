@@ -31,6 +31,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(3);
     }
 
+    /// <summary>
+    ///  checking for action to do according to the page (npc interaction)
+    /// </summary>
+    /// <param name="page"></param>
     public void PageAction(Page page)
     {
         switch (page)
@@ -49,8 +53,11 @@ public class GameManager : MonoBehaviour
 
 
 
-
-public void MoveToScene(int sceneIndex)
+/// <summary>
+///  will move to the scene according to the scene index
+/// </summary>
+/// <param name="sceneIndex"></param>
+private void MoveToScene(int sceneIndex)
 {
     if (sceneIndex < 0) return;
     SceneManager.LoadScene(sceneIndex);

@@ -10,16 +10,25 @@ public class NPC_UI_Handler : MonoBehaviour
    private Sheet sheet;
    private NPC_DATA npcData;
 
+   
+      /// <summary>
+      ///  will start the dialogue with the npc
+      /// </summary>
+      /// <param name="sheet">Sheet object full of pages (scriptableObject)</param>
+      /// <param name="npc">the npc itself (NPC_Data Script of his)</param>
    public void StartDialogue(Sheet sheet, NPC_DATA npc)
    {
       npcData = npc;
       uiManager.ClosePanel(0);
       this.sheet = sheet;
       uiManager.OpenPanel(2);
-      SetSpeechBubble();
+      StartSpeechBubble();
    }
 
-   private void SetSpeechBubble()
+      /// <summary>
+      ///  will start the speech bubble
+      /// </summary>
+   private void StartSpeechBubble()
    {
       SpeachBubbleUI speechBubbleScript = speechBubble.GetComponent<SpeachBubbleUI>();
       speechBubbleScript.SetSheetUI(sheet, npcData); 
