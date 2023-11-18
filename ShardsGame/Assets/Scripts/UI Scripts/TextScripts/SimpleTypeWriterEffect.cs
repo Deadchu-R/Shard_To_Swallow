@@ -76,6 +76,7 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     {
         foreach (char c in fullText)
         {
+           
             OnLetterTyped.Invoke();
             if (c == ' ')
             {

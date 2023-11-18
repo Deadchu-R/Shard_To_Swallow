@@ -107,8 +107,8 @@ public class SpeachBubbleUI : MonoBehaviour
     {
         currentPageIndex = Array.IndexOf(currentSheet.pages, pageToSet);
         currentPage = pageToSet;
-        SetNPCInfo();
         PageActions(currentPage);
+        SetNPCInfo();
         typeWriterEffect.SetText(currentPage);
     }
 
@@ -118,9 +118,10 @@ public class SpeachBubbleUI : MonoBehaviour
     private void SetNPCInfo()
     {
         this.NPCName.text = currentPage.NPCInfo.Name;
-        if (!currentPage.NPCInfo.ShowIcon) this.NPCIcon.gameObject.SetActive(false);
+        if (!currentPage.NPCInfo.ShowIcon) NPCIcon.gameObject.SetActive(false);
         else
         {
+            NPCIcon.gameObject.SetActive(true);
             NPCIconSprite = currentPage.NPCInfo.Icon;
             NPCTalkingIconSprite = currentPage.NPCInfo.TalkingIcon;
             this.NPCIcon.sprite = currentPage.NPCInfo.Icon;
