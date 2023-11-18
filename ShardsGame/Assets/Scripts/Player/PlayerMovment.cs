@@ -27,7 +27,7 @@ public class FourDirectionalMovement : MonoBehaviour
     private void Update()
     {
        if (canUseInputs) Inputs();
-       else anim.StopRecording();
+       
     }
 
     private void Inputs()
@@ -68,6 +68,11 @@ public class FourDirectionalMovement : MonoBehaviour
 
     public void SetCanUseInputsBool(bool state)
     {
+        if (state == false)
+        {
+            anim.SetBool("WalkingRight", false);
+        }
+        
         canUseInputs = state;
         
     }
