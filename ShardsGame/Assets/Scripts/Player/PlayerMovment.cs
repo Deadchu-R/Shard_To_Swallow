@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class FourDirectionalMovement : MonoBehaviour
 {
@@ -131,11 +132,17 @@ public class FourDirectionalMovement : MonoBehaviour
             anim.SetBool("IdleRight", false);
             sR.flipX = false; 
         }
+
         if (Input.GetKeyUp(KeyCode.W))
         {
             anim.SetBool("WalkingLeft", false);
             anim.SetBool("IdleLeft", true);
             anim.SetBool("IdleRight", false);
+        }
+        else if (!Input.anyKey)
+        {
+            // timer to idle animation
+          anim.SetTrigger("Idle");
         }
     }
 

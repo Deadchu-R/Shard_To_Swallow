@@ -9,25 +9,15 @@ public class AudioManager : MonoBehaviour
 {
 
     public Sound[] sounds; // Here is our sounds array
+
+    [SerializeField] private Sound typeSound;
   //public Sound[] walkingClips; // custom sounds array for spesific sounds
 
     public AudioClip[] mainMusicClips; // Main game music(ambient)
   
 
-    //     void Awake()
-    // {
-    //     foreach(Sound s in sounds)
-    //     {
-    //        s.source = gameObject.AddComponent<AudioSource>();
-    //        s.source.clip =s.clip;
-    //        s.source.volume =s.volume;
-    //        s.source.pitch =s.pitch;
-    //     }
-    // }
-    void Start()
-    {
-       //   gameObject.GetComponent<AudioSource>().volume = 0.05f;
-    }
+
+
 
     void Update()
     {
@@ -49,18 +39,28 @@ public class AudioManager : MonoBehaviour
       source.clip = s.clip; 
       source.Play(); 
     }
-      /*
-       // How to call from other script:
-        //Play sound
 
-            if(!gameObject.GetComponent<AudioSource>().isPlaying)
-             {
-            AudioManager audioManager = GameObject.Find("/GameManager").GetComponent<AudioManager>();
-            Sound snd = audioManager.sounds[Random.Range(0,audioManager.sounds.Length)];
-            audioManager.Play(gameObject.GetComponent<AudioSource>(), snd);
-             }
+    public void PlaySound()
+    {
+      AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+      audioSource.Stop();
+      audioSource.clip = typeSound.clip;
+      audioSource.Play();
+        
+    }
+    
+    /*
+     // How to call from other script:
+      //Play sound
 
-       //Example in FourDirectionalMovement script
-      */
+          if(!gameObject.GetComponent<AudioSource>().isPlaying)
+           {
+          AudioManager audioManager = GameObject.Find("/GameManager").GetComponent<AudioManager>();
+          Sound snd = audioManager.sounds[Random.Range(0,audioManager.sounds.Length)];
+          audioManager.Play(gameObject.GetComponent<AudioSource>(), snd);
+           }
+
+     //Example in FourDirectionalMovement script
+    */
     
 }

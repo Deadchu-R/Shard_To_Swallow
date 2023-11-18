@@ -14,7 +14,7 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     
     #region TypeWriter Effect Variables
     [Header("TypeWriter Effect Variables:")]
-    [SerializeField] private float typingSpeed = 0.02f;
+    [SerializeField] private float typingSpeed = 0.05f;
     #endregion
     
     #region Events
@@ -76,11 +76,11 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     {
         foreach (char c in fullText)
         {
+            OnLetterTyped.Invoke();
             if (c == ' ')
             {
                 OnWordTyped.Invoke();
             }
-            OnLetterTyped.Invoke();
             textMeshProUGUI.text += c;
             CheckFinishedText(); 
             yield return new WaitForSeconds(typingSpeed);
