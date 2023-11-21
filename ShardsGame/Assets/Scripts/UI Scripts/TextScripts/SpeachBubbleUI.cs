@@ -6,13 +6,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using System.Diagnostics;
 using UnityEngine.SceneManagement;
+using Debug = UnityEngine.Debug;
 
 public class SpeachBubbleUI : MonoBehaviour
 {
-    [Header("Events")]
-    [SerializeField] private UnityEvent onEndSpeech;
+    [Header("Events")] [SerializeField] private UnityEvent onEndSpeech;
     [SerializeField] private UnityEvent onStartSpeech;
+
     #region Buttons
 
     [Header("Buttons")] [SerializeField] private Button backButton;
@@ -50,6 +52,7 @@ public class SpeachBubbleUI : MonoBehaviour
     [Header("for testing only")] [SerializeField]
     private int currentPageIndex = 0;
 
+    [SerializeField] private int lastPageIndex = 0; // Add this line
     [SerializeField] private Page currentPage;
     [SerializeField] private Page lastPage;
     [SerializeField] private Sheet currentSheet;
@@ -64,23 +67,52 @@ public class SpeachBubbleUI : MonoBehaviour
     /// <param name="sheet">scriptable object made from Sheet.cs</param>
     /// <param name="npcD">is NPC_DATA which is the NPC itself</param>
     /// <param name="pageIndex">the Index of the page it will start at</param> 
-    public void SetSheetUI(Sheet sheet, NPC_DATA npcD = null, int pageIndex = 0)
+    public void SetSheetUI(Sheet sheet, int pageIndex, NPC_DATA npcD = null)
     {
+        //int subLastPageIndex;
+        var caller = new StackTrace().GetFrame(1).GetMethod().Name;
+        // if call didnt come from NextPage or previousPage check
+        if (caller != "NextPage" && caller != "PreviousPage")
+        {
+            Debug.Log("eneter");
+            lastPageIndex = currentPageIndex;
+            lastPage = currentPage;
+        }
+
+        if (caller == "PreviousPage" )
+        {
+            //last page should be dialouge test page
+            lastPage = sheet.pages[pageIndex];
+        }
+
+
+       // lastPageIndex = currentPageIndex; // Update lastPageIndex here
+        Debug.Log("pageIndex: " + pageIndex + ", currentPageIndex: " + currentPageIndex);
         onStartSpeech.Invoke();
-        currentPageIndex = pageIndex;
-        if (currentSheet == null)
+        if (currentSheet != null)
+        {
+            //lastPage = currentPage; // Update lastPage here
+            if (currentSheet != sheet) // Only update lastSheet and lastPageIndex if moving to a new sheet
+            {
+                Debug.Log("not current sheet");
+                lastSheet = currentSheet;
+                //lastPageIndex = currentPageIndex;
+            }
+
+            currentPageIndex = Array.IndexOf(currentSheet.pages, lastPage); // Use the last page index for the old sheet
+            ResetBubble();
+        }
+        else if (npcD != null)
         {
             npc = npcD;
         }
-        else
-        {
-            lastPage = currentPage;
-            lastSheet = currentSheet;
-            ResetBubble();
-        }
 
+        // currentPageIndex = pageIndex;
         currentSheet = sheet;
         pages = sheet.pages;
+        //lastPageIndex = currentPageIndex--;
+        //currentPageIndex = pageIndex;
+        Debug.Log("currentPageIndex: " + currentPageIndex);
         SetTextSequence(pageIndex);
     }
 
@@ -124,7 +156,7 @@ public class SpeachBubbleUI : MonoBehaviour
             NPCIcon.gameObject.SetActive(true);
             NPCIconSprite = currentPage.NPCInfo.Icon;
             NPCTalkingIconSprite = currentPage.NPCInfo.TalkingIcon;
-            this.NPCIcon.sprite = currentPage.NPCInfo.Icon;
+            NPCIcon.sprite = currentPage.NPCInfo.Icon;
         }
     }
 
@@ -154,7 +186,6 @@ public class SpeachBubbleUI : MonoBehaviour
         switch (page)
         {
             case DefaultPage:
-                Debug.Log(currentSheet.pages.Length);
                 if (currentPageIndex + 1 <= currentSheet.pages.Length)
                 {
                     NextButtonInteractable(true);
@@ -163,13 +194,16 @@ public class SpeachBubbleUI : MonoBehaviour
                 {
                     NextButtonInteractable(false);
                 }
+
                 CloseNonDefaultPageActions();
                 break;
-            
+
             case DialoguePage dialoguePage:
                 SetDialogueOptions(dialoguePage);
                 NextButtonInteractable(false); // At DialoguePage the next will be disabled
-                if (currentPageIndex > 0 || lastSheet != null) // will check if having a last page to return to, if yes will enable the back button
+                if (currentPageIndex > 0 ||
+                    lastSheet !=
+                    null) // will check if having a last page to return to, if yes will enable the back button
                 {
                     backButton.interactable = true;
                 }
@@ -224,23 +258,30 @@ public class SpeachBubbleUI : MonoBehaviour
     {
         NextButtonInteractable(false);
         backButton.interactable = true;
-        if (currentPageIndex < pages.Length - 1) //check if index wont be out of range
-        {
-            currentPageIndex++;
-            backButton.onClick.AddListener(PreviousPage);
-        }
+        lastPageIndex = currentPageIndex;
+        SetCurrentPageIndex(char.Parse("+"));
 
-        currentPage = pages[currentPageIndex];
-        if (currentSheet.ContainsPage(currentPage)) //check if the page is in the current sheet
+        Page nextPage = pages[currentPageIndex];
+        if (currentSheet.ContainsPage(nextPage)) //check if the page is in the current sheet
         {
-            lastPage = currentPage;
+            lastPage = currentPage; // Update lastPage here
+            currentPage = nextPage;
             isLastPage();
+            Debug.Log("set last page a");
             SetPage(currentPage);
         }
-
-        else if (lastSheet != null) //check if there is a last sheet to set the Sheet to
+        else
         {
-            SetSheetUI(lastSheet);
+            if (lastSheet != currentSheet) // Only update lastSheet if moving to a new sheet
+            {
+                lastSheet = currentSheet;
+            }
+
+            if (lastSheet != null) //check if there is a last sheet to set the Sheet to
+            {
+                lastPage = currentPage; // Update lastPage before moving to a new sheet
+                SetSheetUI(lastSheet, currentPageIndex + 1);
+            }
         }
     }
 
@@ -259,40 +300,78 @@ public class SpeachBubbleUI : MonoBehaviour
     /// <summary>
     ///  will Move To the previous page
     /// </summary>
+    /// <summary>
+    ///  will Move To the previous page
+    /// </summary>
     private void PreviousPage()
     {
-        int pageIndex = 0;
+        lastPageIndex = currentPageIndex; // Update lastPageIndex here
         if (currentSheet.ContainsPage(lastPage)) //check if the page is in the current sheet aka Normal Set Page
         {
-            if (currentPageIndex > 0) //check if there is a previous page in this sheet
-            {
-                currentPageIndex--;
-                nextButton.onClick.AddListener(NextPage);
-            }
-
-            if (currentPageIndex == 0) //check if it is the first page in the sheet
-            {
-                backButton.interactable = false;
-                currentPageIndex = 0;
-               
-            }
-            pageIndex = currentPageIndex;
+            Debug.Log("Normal Set Page");
+            SetCurrentPageIndex(char.Parse("-"));
             currentPage = pages[currentPageIndex];
-            lastPage = currentSheet.pages[pageIndex];
+            if (currentPage = lastPage) lastPage = lastSheet.pages[lastPageIndex - 1];
+            // if (currentSheet.ContainsPage(lastPage)) lastPage = currentSheet.pages[currentPageIndex];
             SetPage(lastPage);
             nextButton.onClick.RemoveListener(ClosePanel);
         }
         else if
-            (lastSheet != null && lastSheet != currentSheet) //check if there is a last sheet to set the Sheet and page to, aka new sheet page set
+            (lastSheet != null &&
+             lastSheet !=
+             currentSheet) //check if there is a last sheet to set the Sheet and page to, aka new sheet page set
         {
+            lastPage = currentPage; // Update lastPage here
             currentSheet = lastSheet;
-            pageIndex = lastSheet.pages.Length - 1;
-            lastPage = currentSheet.pages[pageIndex];
-            if (pageIndex > 0) backButton.interactable = true;
-            SetSheetUI(lastSheet, npc, pageIndex);
-            currentPageIndex = pageIndex;
+            //currentPageIndex = lastPageIndex; // Use the lastPageIndex for the old sheet
+
+            lastPage = lastSheet.pages[currentPageIndex];
+            //currentSheet = lastSheet;
+            //currentPageIndex = Array.IndexOf(currentSheet.pages, lastPage); // Use the last page index for the old sheet
+
+            if (currentPageIndex > 0)
+            {
+                backButton.interactable = true;
+                backButton.onClick.AddListener(PreviousPage);
+            }
+
+            int index = currentSheet.pages.Length - 1;
+            SetCurrentPageIndex(char.Parse("-"));
+            Debug.Log("set last index: " + lastPageIndex);
+            SetSheetUI(lastSheet, index, npc);
         }
     }
+
+    private void SetCurrentPageIndex(char operatorChar)
+    {
+        switch (operatorChar)
+        {
+            case '+':
+                if (currentPageIndex < pages.Length - 1) //check if index won't be out of range
+                {
+                    currentPageIndex++;
+                    backButton.onClick.AddListener(PreviousPage);
+                }
+
+                break;
+            case '-':
+                if (currentPageIndex > 0) //check if there is a previous page in this sheet
+                {
+                    currentPageIndex--;
+                    nextButton.onClick.AddListener(NextPage);
+                    backButton.onClick.AddListener(PreviousPage);
+                }
+
+                if (currentPageIndex == 0) //check if it is the first page in the sheet
+                {
+                    backButton.interactable = false;
+                    currentPageIndex = 0;
+                }
+
+                break;
+        }
+    }
+
 
     /// <summary>
     ///  will close the panel and invoke the onEndSpeech event
