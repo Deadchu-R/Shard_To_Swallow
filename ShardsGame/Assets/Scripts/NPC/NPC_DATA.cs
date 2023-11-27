@@ -21,6 +21,7 @@ public class NPC_DATA : MonoBehaviour
       SetIsNpcInteractionStarted(true);
       StartNPCAction();
     }
+
   }
   
   /// <summary>

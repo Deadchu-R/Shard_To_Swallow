@@ -76,27 +76,25 @@ public class SpeachBubbleUI : MonoBehaviour
         {
             Debug.Log("eneter");
             lastPageIndex = currentPageIndex;
-            lastPage = currentPage;
+            SetLastPage();
         }
 
-        if (caller == "PreviousPage" )
+        if (caller == "PreviousPage") // problem might be in here
         {
             //last page should be dialouge test page
-            lastPage = sheet.pages[pageIndex];
+            Debug.Log("PageIndex:: " + pageIndex);
+            if (currentSheet.pages.Length > 1) lastPage = sheet.pages[pageIndex - 1];
+            lastPageIndex = pageIndex - 1;
         }
+        
 
-
-       // lastPageIndex = currentPageIndex; // Update lastPageIndex here
-        Debug.Log("pageIndex: " + pageIndex + ", currentPageIndex: " + currentPageIndex);
         onStartSpeech.Invoke();
         if (currentSheet != null)
         {
-            //lastPage = currentPage; // Update lastPage here
+
             if (currentSheet != sheet) // Only update lastSheet and lastPageIndex if moving to a new sheet
             {
-                Debug.Log("not current sheet");
                 lastSheet = currentSheet;
-                //lastPageIndex = currentPageIndex;
             }
 
             currentPageIndex = Array.IndexOf(currentSheet.pages, lastPage); // Use the last page index for the old sheet
@@ -107,12 +105,9 @@ public class SpeachBubbleUI : MonoBehaviour
             npc = npcD;
         }
 
-        // currentPageIndex = pageIndex;
+    
         currentSheet = sheet;
         pages = sheet.pages;
-        //lastPageIndex = currentPageIndex--;
-        //currentPageIndex = pageIndex;
-        Debug.Log("currentPageIndex: " + currentPageIndex);
         SetTextSequence(pageIndex);
     }
 
@@ -138,6 +133,7 @@ public class SpeachBubbleUI : MonoBehaviour
     private void SetPage(Page pageToSet)
     {
         currentPageIndex = Array.IndexOf(currentSheet.pages, pageToSet);
+        Debug.Log("currentPageIndex: " + currentPageIndex);
         currentPage = pageToSet;
         PageActions(currentPage);
         SetNPCInfo();
@@ -258,13 +254,12 @@ public class SpeachBubbleUI : MonoBehaviour
     {
         NextButtonInteractable(false);
         backButton.interactable = true;
-        lastPageIndex = currentPageIndex;
         SetCurrentPageIndex(char.Parse("+"));
 
         Page nextPage = pages[currentPageIndex];
         if (currentSheet.ContainsPage(nextPage)) //check if the page is in the current sheet
         {
-            lastPage = currentPage; // Update lastPage here
+            SetLastPage();
             currentPage = nextPage;
             isLastPage();
             Debug.Log("set last page a");
@@ -279,10 +274,15 @@ public class SpeachBubbleUI : MonoBehaviour
 
             if (lastSheet != null) //check if there is a last sheet to set the Sheet to
             {
-                lastPage = currentPage; // Update lastPage before moving to a new sheet
+                SetLastPage(); // Update lastPage before moving to a new sheet
                 SetSheetUI(lastSheet, currentPageIndex + 1);
             }
         }
+    }
+
+    private void SetLastPage()
+    {
+        lastPage = currentPage; // Update lastPage here
     }
 
     /// <summary>
@@ -305,14 +305,19 @@ public class SpeachBubbleUI : MonoBehaviour
     /// </summary>
     private void PreviousPage()
     {
-        lastPageIndex = currentPageIndex; // Update lastPageIndex here
+        //lastPageIndex = currentPageIndex; // Update lastPageIndex here
         if (currentSheet.ContainsPage(lastPage)) //check if the page is in the current sheet aka Normal Set Page
         {
             Debug.Log("Normal Set Page");
             SetCurrentPageIndex(char.Parse("-"));
-            currentPage = pages[currentPageIndex];
-            if (currentPage = lastPage) lastPage = lastSheet.pages[lastPageIndex - 1];
-            // if (currentSheet.ContainsPage(lastPage)) lastPage = currentSheet.pages[currentPageIndex];
+            Debug.Log("Equals: " + currentPage.PageEquals(pages[currentPageIndex]));
+            //currentPage = pages[currentPageIndex];
+            if (currentPage.PageEquals(lastPage) && lastSheet != null)
+            {
+                lastPage = lastSheet.pages[lastPageIndex];
+                Debug.Log($"currentPage:{currentPage.Text} == lastPage:{lastPage.Text} ");
+            }
+
             SetPage(lastPage);
             nextButton.onClick.RemoveListener(ClosePanel);
         }
@@ -321,13 +326,9 @@ public class SpeachBubbleUI : MonoBehaviour
              lastSheet !=
              currentSheet) //check if there is a last sheet to set the Sheet and page to, aka new sheet page set
         {
-            lastPage = currentPage; // Update lastPage here
-            currentSheet = lastSheet;
-            //currentPageIndex = lastPageIndex; // Use the lastPageIndex for the old sheet
-
+            Debug.Log("i am here");
+            SetLastPage();
             lastPage = lastSheet.pages[currentPageIndex];
-            //currentSheet = lastSheet;
-            //currentPageIndex = Array.IndexOf(currentSheet.pages, lastPage); // Use the last page index for the old sheet
 
             if (currentPageIndex > 0)
             {
@@ -338,7 +339,8 @@ public class SpeachBubbleUI : MonoBehaviour
             int index = currentSheet.pages.Length - 1;
             SetCurrentPageIndex(char.Parse("-"));
             Debug.Log("set last index: " + lastPageIndex);
-            SetSheetUI(lastSheet, index, npc);
+            Debug.Log("set current index: " + currentPageIndex);
+            SetSheetUI(lastSheet, lastPageIndex, npc);
         }
     }
 

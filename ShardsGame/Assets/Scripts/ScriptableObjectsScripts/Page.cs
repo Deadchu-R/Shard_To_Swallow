@@ -15,6 +15,12 @@ public class Page : ScriptableObject
   onFinishedPage.Invoke(this);
  }
 
+ public bool PageEquals(Page other)
+ {
+  Debug.Log("this Text: " + Text + " other Text: " + other.Text);
+  return Text == other.Text && QuestionText == other.QuestionText && NPCInfo == other.NPCInfo;
+ }
+
  public virtual void SetPage()
  {
   

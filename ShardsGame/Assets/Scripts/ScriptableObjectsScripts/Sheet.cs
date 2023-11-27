@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,17 +26,9 @@ public class Sheet : ScriptableObject
     /// <param name="page">the certain page</param>
     /// <returns></returns>
    public bool ContainsPage(Page page)
-   {
-      foreach (var pageInSheet in pages)
-      {
-         if (pageInSheet.Equals(page))
-         {
-            return true;
-         }
-      }
-
-      return false;
-   }
+    {
+       return pages.Contains(page);
+    }
     
    public void SetPages(Page[] newPages)
    {

@@ -14,7 +14,7 @@ public class DialougeOptions : MonoBehaviour
 
 
     /// <summary>
-    ///  will set the dialouge options according to the page: (pages) array that is passed
+    ///  will set the dialogue options according to the page: (pages) array that is passed
     /// </summary>
     /// <param name="page"></param>
     public void SetDialougeOptions(DialoguePage page)

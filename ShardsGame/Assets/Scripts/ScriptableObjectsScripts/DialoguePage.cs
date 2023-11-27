@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Page", menuName = "Page/DialoguePage")]
@@ -10,5 +11,9 @@ public class DialoguePage : Page
     public override void SetPage()
     {
         base.SetPage();
+    }
+    public bool ContainsPage(Page page)
+    {
+        return Pages.Contains(page);
     }
 }
