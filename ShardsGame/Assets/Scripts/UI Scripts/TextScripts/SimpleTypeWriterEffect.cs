@@ -85,7 +85,6 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     private IEnumerator TypeText()
     {
         _isCoroutineRunning = true;
-        Debug.Log("TypeText started");
         foreach (char c in _fullText)
         {
             onLetterTyped.Invoke();

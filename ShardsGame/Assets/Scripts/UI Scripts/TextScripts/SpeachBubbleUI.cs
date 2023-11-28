@@ -1,13 +1,9 @@
 using System;
 using TMPro;
-using System.Collections;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Diagnostics;
-using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 
 public class SpeachBubbleUI : MonoBehaviour
@@ -45,9 +41,9 @@ public class SpeachBubbleUI : MonoBehaviour
 
     #endregion
 
-    private Page[] pages;
-    private string questionText;
-    private NPC_DATA npc;
+    private Page[] _pages;
+    private string _questionText;
+    private NPC_DATA _npc;
 
     [Header("for testing only")] [SerializeField]
     private int currentPageIndex = 0;
@@ -58,8 +54,8 @@ public class SpeachBubbleUI : MonoBehaviour
     [SerializeField] private Sheet currentSheet;
     [SerializeField] private Sheet lastSheet;
 
-    private bool isDialogueActive = false;
-    private bool isTalkingIconDisplayed = false;
+    private bool _isDialogueActive = false;
+
 
     /// <summary>
     /// will set the sheet to the current sheet 
@@ -80,33 +76,34 @@ public class SpeachBubbleUI : MonoBehaviour
 
         if (caller == "PreviousPage") // problem might be in here
         {
-            //last page should be dialouge test page
-            Debug.Log("PageIndex:: " + pageIndex);
-            if (currentSheet.pages.Length > 1) lastPage = sheet.pages[pageIndex - 1];
+            if (currentSheet.pages.Length > 1)
+            {
+                lastPage = sheet.pages[pageIndex - 1];
+            }
+
             lastPageIndex = pageIndex - 1;
         }
-        
+
 
         onStartSpeech.Invoke();
         if (currentSheet != null)
         {
-
             if (currentSheet != sheet) // Only update lastSheet and lastPageIndex if moving to a new sheet
             {
                 lastSheet = currentSheet;
             }
 
             currentPageIndex = Array.IndexOf(currentSheet.pages, lastPage); // Use the last page index for the old sheet
-            ResetBubble();
+            ResetSheet();
         }
         else if (npcD != null)
         {
-            npc = npcD;
+            _npc = npcD;
         }
 
-    
+
         currentSheet = sheet;
-        pages = sheet.pages;
+        _pages = sheet.pages;
         SetTextSequence(pageIndex);
     }
 
@@ -117,11 +114,11 @@ public class SpeachBubbleUI : MonoBehaviour
     private void SetTextSequence(int pageIndex = 0)
     {
         NextButtonInteractable(false);
-        if (isDialogueActive) return;
-        isDialogueActive = true;
-        currentPage = pages[pageIndex];
+        if (_isDialogueActive) return;
+        _isDialogueActive = true;
+        currentPage = _pages[pageIndex];
         SetPage(currentPage);
-        if (pages.Length > 1) nextButton.onClick.AddListener(NextPage);
+        if (_pages.Length > 1) nextButton.onClick.AddListener(NextPage);
         else nextButton.onClick.AddListener(ClosePanel);
     }
 
@@ -181,14 +178,7 @@ public class SpeachBubbleUI : MonoBehaviour
         switch (page)
         {
             case DefaultPage:
-                if (currentPageIndex + 1 <= currentSheet.pages.Length)
-                {
-                    NextButtonInteractable(true);
-                }
-                else
-                {
-                    NextButtonInteractable(false);
-                }
+                NextButtonInteractable(currentPageIndex + 1 <= currentSheet.pages.Length);
 
                 CloseNonDefaultPageActions();
                 break;
@@ -205,6 +195,7 @@ public class SpeachBubbleUI : MonoBehaviour
 
                 break;
             default:
+                Debug.Log("default action");
                 break;
         }
     }
@@ -225,16 +216,7 @@ public class SpeachBubbleUI : MonoBehaviour
     {
         if (!currentPage.NPCInfo.ShowIcon) return;
 
-        if (NPCIcon.sprite == NPCIconSprite)
-        {
-            NPCIcon.sprite = NPCTalkingIconSprite;
-            isTalkingIconDisplayed = true;
-        }
-        else
-        {
-            NPCIcon.sprite = NPCIconSprite;
-            isTalkingIconDisplayed = false;
-        }
+        NPCIcon.sprite = NPCIcon.sprite == NPCIconSprite ? NPCTalkingIconSprite : NPCIconSprite;
     }
 
     /// <summary>
@@ -253,27 +235,25 @@ public class SpeachBubbleUI : MonoBehaviour
     {
         NextButtonInteractable(false);
         backButton.interactable = true;
+        SetLastPage();
         SetCurrentPageIndex(char.Parse("+"));
 
-        Page nextPage = pages[currentPageIndex];
+        Page nextPage = _pages[currentPageIndex];
         if (currentSheet.ContainsPage(nextPage)) //check if the page is in the current sheet
         {
-            SetLastPage();
             currentPage = nextPage;
-            isLastPage();
-            Debug.Log("set last page a");
+            _isLastPage();
             SetPage(currentPage);
         }
         else
         {
-            if (lastSheet != currentSheet) // Only update lastSheet if moving to a new sheet
+            if (!lastSheet.SheetEquals(currentSheet)) // Only update lastSheet if moving to a new sheet
             {
                 lastSheet = currentSheet;
             }
 
             if (lastSheet != null) //check if there is a last sheet to set the Sheet to
             {
-                SetLastPage(); // Update lastPage before moving to a new sheet
                 SetSheetUI(lastSheet, currentPageIndex + 1);
             }
         }
@@ -287,9 +267,9 @@ public class SpeachBubbleUI : MonoBehaviour
     /// <summary>
     /// checks if it is the last page of the sheet and will change the next button Listener accordingly 
     /// </summary>
-    private void isLastPage()
+    private void _isLastPage()
     {
-        if (currentPageIndex + 1 >= pages.Length)
+        if (currentPageIndex + 1 >= _pages.Length)
         {
             nextButton.onClick.RemoveListener(NextPage);
             nextButton.onClick.AddListener(ClosePanel);
@@ -307,14 +287,10 @@ public class SpeachBubbleUI : MonoBehaviour
         //lastPageIndex = currentPageIndex; // Update lastPageIndex here
         if (currentSheet.ContainsPage(lastPage)) //check if the page is in the current sheet aka Normal Set Page
         {
-            Debug.Log("Normal Set Page");
             SetCurrentPageIndex(char.Parse("-"));
-            Debug.Log("Equals: " + currentPage.PageEquals(pages[currentPageIndex]));
-            //currentPage = pages[currentPageIndex];
             if (currentPage.PageEquals(lastPage) && lastSheet != null)
             {
                 lastPage = lastSheet.pages[lastPageIndex];
-                Debug.Log($"currentPage:{currentPage.Text} == lastPage:{lastPage.Text} ");
             }
 
             SetPage(lastPage);
@@ -326,7 +302,7 @@ public class SpeachBubbleUI : MonoBehaviour
              currentSheet) //check if there is a last sheet to set the Sheet and page to, aka new sheet page set
         {
             Debug.Log("i am here");
-            SetLastPage();
+            //SetLastPage();
             lastPage = lastSheet.pages[currentPageIndex];
 
             if (currentPageIndex > 0)
@@ -335,11 +311,8 @@ public class SpeachBubbleUI : MonoBehaviour
                 backButton.onClick.AddListener(PreviousPage);
             }
 
-            int index = currentSheet.pages.Length - 1;
             SetCurrentPageIndex(char.Parse("-"));
-            Debug.Log("set last index: " + lastPageIndex);
-            Debug.Log("set current index: " + currentPageIndex);
-            SetSheetUI(lastSheet, lastPageIndex, npc);
+            SetSheetUI(lastSheet, lastPageIndex, _npc);
         }
     }
 
@@ -348,7 +321,7 @@ public class SpeachBubbleUI : MonoBehaviour
         switch (operatorChar)
         {
             case '+':
-                if (currentPageIndex < pages.Length - 1) //check if index won't be out of range
+                if (currentPageIndex < _pages.Length - 1) //check if index won't be out of range
                 {
                     currentPageIndex++;
                     backButton.onClick.AddListener(PreviousPage);
@@ -379,21 +352,25 @@ public class SpeachBubbleUI : MonoBehaviour
     /// </summary>
     private void ClosePanel()
     {
-        ResetBubble();
+        //ResetBubble();
         currentPage.FinishedPage();
         gameObject.SetActive(false);
         onEndSpeech.Invoke();
-        if (npc != null) npc.SetIsNpcInteractionStarted(false);
+        if (_npc != null) _npc.SetIsNpcInteractionStarted(false);
     }
 
     /// <summary>
     ///  will reset the bubble to the default state
     /// </summary>
-    private void ResetBubble()
+    public void ResetBubble()
+    {
+        currentPageIndex = 0;
+    }
+
+    private void ResetSheet()
     {
         currentSheet = null;
-        currentPageIndex = 0;
         nextButton.onClick.RemoveAllListeners();
-        isDialogueActive = false;
+        _isDialogueActive = false;
     }
 }

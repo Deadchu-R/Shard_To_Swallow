@@ -29,7 +29,18 @@ public class Sheet : ScriptableObject
     {
        return pages.Contains(page);
     }
-    
+    public bool SheetEquals(Sheet other)
+    {
+        int equalPages = 0;
+        for (int i = 0; i < pages.Length; i++)
+        {
+            if (pages[i].PageEquals(other.pages[i]))
+            {
+                equalPages++;
+            }
+        }
+        return equalPages == pages.Length;
+    }
    public void SetPages(Page[] newPages)
    {
       pages = newPages;

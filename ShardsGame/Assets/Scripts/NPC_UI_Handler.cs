@@ -31,6 +31,7 @@ public class NPC_UI_Handler : MonoBehaviour
    private void StartSpeechBubble()
    {
       SpeachBubbleUI speechBubbleScript = speechBubble.GetComponent<SpeachBubbleUI>();
+      speechBubbleScript.ResetBubble();
       speechBubbleScript.SetSheetUI(sheet,0, npcData); 
    }
 }
