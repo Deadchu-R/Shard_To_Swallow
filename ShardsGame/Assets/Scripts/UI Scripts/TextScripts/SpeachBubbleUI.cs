@@ -74,7 +74,6 @@ public class SpeachBubbleUI : MonoBehaviour
         // if call didnt come from NextPage or previousPage check
         if (caller != "NextPage" && caller != "PreviousPage")
         {
-            Debug.Log("eneter");
             lastPageIndex = currentPageIndex;
             SetLastPage();
         }
@@ -132,8 +131,8 @@ public class SpeachBubbleUI : MonoBehaviour
     /// <param name="pageToSet">the Page to bet set to</param>
     private void SetPage(Page pageToSet)
     {
+        typeWriterEffect.StopText();
         currentPageIndex = Array.IndexOf(currentSheet.pages, pageToSet);
-        Debug.Log("currentPageIndex: " + currentPageIndex);
         currentPage = pageToSet;
         PageActions(currentPage);
         SetNPCInfo();

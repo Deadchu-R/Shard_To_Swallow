@@ -39,13 +39,7 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     {
         textMeshProUGUI.text = "";
         _fullText = page.Text;
-        if (_isCoroutineRunning)
-        {
-            Debug.Log("Coroutine is still running");
-            StopText();
-        }
-
-        if (!_isCoroutineRunning) StartCoroutine(TypeText());
+        if (!_isCoroutineRunning) StartCoroutine(TypeText()); // in order to prevent multiple coroutines running at the same time, will check if any coroutine is running
     }
 
     /// <summary>
@@ -54,12 +48,10 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     /// <returns></returns>
     private bool IsFinishedText() // will check if type-writer finished to write the text
     {
-        // if (textMeshProUGUI.text != fullText) 
         if (textMeshProUGUI.text == _fullText)
         {
-            Debug.Log("finished text");
+            //Debug.Log("finished text");
             _isCoroutineRunning = false;
-            //StopText();
             onFinishedText.Invoke();
             return true;
         }
@@ -69,9 +61,10 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     /// <summary>
     /// will stop the typing Coroutine immediately
     /// </summary>
-    private void StopText()
+    public void StopText()
     {
-        StopCoroutine(TypeText());
+        _isCoroutineRunning = false;
+        StopAllCoroutines();
     }
 
     /// <summary>
