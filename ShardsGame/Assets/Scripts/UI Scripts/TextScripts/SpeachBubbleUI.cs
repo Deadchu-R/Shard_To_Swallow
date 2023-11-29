@@ -45,6 +45,7 @@ public class SpeachBubbleUI : MonoBehaviour
 
     [Header("for testing only")] 
     [SerializeField] private int currentPageIndex = 0;
+    [SerializeField] private int LastPageIndex = 0; 
     private int CurrentPageIndex
     {
         get => currentPageIndex;
@@ -55,10 +56,13 @@ public class SpeachBubbleUI : MonoBehaviour
             nextButton.interactable = currentPageIndex < _pages.Length - 1;
         }
     } 
-    
+    private int lastPageIndex
+    {
+        get => LastPageIndex;
+        set => LastPageIndex = value;
+    }
 
 
-    [SerializeField] private int lastPageIndex = 0; 
     [SerializeField] private Page currentPage;
     [SerializeField] private Page lastPage;
     [SerializeField] private Sheet currentSheet;
@@ -98,7 +102,7 @@ public class SpeachBubbleUI : MonoBehaviour
 
         currentSheet = sheet;
         _pages = sheet.pages;
-        SetTextSequence(pageIndex);
+        InitializePageSequence(pageIndex);
     }
 
     private void CallerActions(Sheet sheet, string caller, int pageIndex)
@@ -123,7 +127,7 @@ public class SpeachBubbleUI : MonoBehaviour
     /// will set the text sequence to the current page
     /// </summary>
     /// <param name="pageIndex"> Index to set the currentPage</param>
-    private void SetTextSequence(int pageIndex = 0)
+    private void InitializePageSequence(int pageIndex = 0)
     {
         if (_isDialogueActive) return;
         _isDialogueActive = true;
