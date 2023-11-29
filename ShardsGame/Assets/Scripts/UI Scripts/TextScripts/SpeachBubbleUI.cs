@@ -79,7 +79,6 @@ public class SpeachBubbleUI : MonoBehaviour
     /// <param name="pageIndex">the Index of the page it will start at</param> 
     public void SetSheetUI(Sheet sheet, int pageIndex, NPC_DATA npcD = null)
     {
-        //int subLastPageIndex;
         var caller = new StackTrace().GetFrame(1).GetMethod().Name;
         CallerActions(sheet, caller, pageIndex);
 
@@ -156,7 +155,7 @@ public class SpeachBubbleUI : MonoBehaviour
     /// </summary>
     private void SetNPCInfo()
     {
-        this.NPCName.text = currentPage.NPCInfo.Name;
+        NPCName.text = currentPage.NPCInfo.Name;
         if (!currentPage.NPCInfo.ShowIcon) NPCIcon.gameObject.SetActive(false);
         else
         {
@@ -194,7 +193,6 @@ public class SpeachBubbleUI : MonoBehaviour
         {
             case DefaultPage:
                 NextButtonInteractable(currentPageIndex + 1 <= currentSheet.pages.Length);
-
                 CloseNonDefaultPageActions();
                 break;
 
@@ -207,7 +205,6 @@ public class SpeachBubbleUI : MonoBehaviour
                 {
                     backButton.interactable = true;
                 }
-
                 break;
             default:
                 Debug.Log("default action");
@@ -230,7 +227,6 @@ public class SpeachBubbleUI : MonoBehaviour
     public void TalkAnimation()
     {
         if (!currentPage.NPCInfo.ShowIcon) return;
-
         NPCIcon.sprite = NPCIcon.sprite == NPCIconSprite ? NPCTalkingIconSprite : NPCIconSprite;
     }
 
@@ -274,21 +270,18 @@ public class SpeachBubbleUI : MonoBehaviour
         Page nextPage = _pages[currentPageIndex];
         if (currentSheet.ContainsPage(nextPage)) //check if the page is in the current sheet
         {
-         
             if (lastPage.PageEquals(currentPage)) lastPage = currentSheet.pages[lastPageIndex];
-
             currentPage = nextPage;
             IsLastPage();
             SetPage(currentPage);
         }
         else
         {
-            
             if (!lastSheet.SheetEquals(currentSheet)) // Only update lastSheet if moving to a new sheet
             {
                 lastSheet = currentSheet;
             }
-
+            
             if (lastSheet != null) //check if there is a last sheet to set the Sheet to
             {
                 SetSheetUI(lastSheet, currentPageIndex + 1);
@@ -324,7 +317,6 @@ public class SpeachBubbleUI : MonoBehaviour
              currentSheet) //check if there is a last sheet to set the Sheet and page to, aka new sheet page set
         {
             lastPage = lastSheet.pages[currentPageIndex];
-
             if (currentPageIndex > 0)
             {
                 backButton.interactable = true;
@@ -354,7 +346,6 @@ private void ResetNextButtonListeners()
                     currentPageIndex++; 
                     ResetBackButtonListeners();
                 }
-
                 break;
             case '-':
                 if (currentPageIndex > 0) //check if there is a previous page in this sheet
