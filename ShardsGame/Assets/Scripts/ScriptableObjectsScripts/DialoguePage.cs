@@ -8,10 +8,6 @@ public class DialoguePage : Page
 {
     public string[] Options;
     public Page[] Pages;
-    public override void SetPage()
-    {
-        base.SetPage();
-    }
     public bool ContainsPage(Page page)
     {
         return Pages.Contains(page);

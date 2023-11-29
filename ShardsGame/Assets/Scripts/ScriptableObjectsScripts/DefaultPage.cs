@@ -6,8 +6,4 @@ using UnityEngine;
 public class DefaultPage : Page
 {
         public bool test = false;
-        public override void SetPage()
-        {
-            base.SetPage();
-        }
 }
