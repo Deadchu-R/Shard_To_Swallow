@@ -14,7 +14,11 @@ public class Page : ScriptableObject
   onFinishedPage.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().PageAction);
   onFinishedPage.Invoke(this);
  }
-
+ 
+ public virtual void PageAction(SpeechBubbleUI speechBubble)
+ {
+ } 
+ 
  public bool PageEquals(Page other)
  {
   return Text == other.Text && QuestionText == other.QuestionText && NPCInfo == other.NPCInfo;

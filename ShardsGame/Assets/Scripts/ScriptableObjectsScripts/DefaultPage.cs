@@ -6,4 +6,9 @@ using UnityEngine;
 public class DefaultPage : Page
 {
         public bool test = false;
+        public override void PageAction(SpeechBubbleUI speechBubbleUI)
+        {
+            speechBubbleUI.SetButtonInteractable(speechBubbleUI.NextButton,speechBubbleUI.CurrentPageIndex + 1 <= speechBubbleUI.CurrentSheet.pages.Length);
+            speechBubbleUI.CloseNonDefaultPageActions();
+        }
 }

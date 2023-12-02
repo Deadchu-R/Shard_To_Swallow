@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NPC_UI_Handler : MonoBehaviour
 {
-   [SerializeField] private SpeachBubbleUI speechBubble;
+   [SerializeField] private SpeechBubbleUI speechBubble;
    
    [SerializeField] private UI_Manager uiManager;
    private Sheet sheet;
@@ -30,9 +30,8 @@ public class NPC_UI_Handler : MonoBehaviour
       /// </summary>
    private void StartSpeechBubble()
    {
-      SpeachBubbleUI speechBubbleScript = speechBubble.GetComponent<SpeachBubbleUI>();
-      speechBubbleScript.ResetBubble();
-      speechBubbleScript.SetSheetUI(sheet,0, npcData); 
+      SpeechBubbleUI speechBubbleScript = speechBubble.GetComponent<SpeechBubbleUI>();
+      speechBubbleScript.SetSheetUI(sheet,0, npcData);
    }
 }
 

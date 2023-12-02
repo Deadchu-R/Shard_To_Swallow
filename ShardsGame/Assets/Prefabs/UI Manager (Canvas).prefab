@@ -808,13 +808,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ef5540f23fae448a00a5c8c48da60d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backButton: {fileID: 3408455668687758694}
-  nextButton: {fileID: 4848596839473429692}
+  onEndSpeech:
+    m_PersistentCalls:
+      m_Calls: []
+  onStartSpeech:
+    m_PersistentCalls:
+      m_Calls: []
+  BackButton: {fileID: 3408455668687758694}
+  NextButton: {fileID: 4848596839473429692}
   NPCIcon: {fileID: 5132868259342696866}
   NPCName: {fileID: 2978382574989486909}
   NPCIconSprite: {fileID: 0}
   typeWriterEffect: {fileID: 4077229905818808203}
   dialogueOptionsScript: {fileID: 6933867003379621900}
+  currentPageIndex: 0
+  LastPageIndex: 0
+  currentPage: {fileID: 0}
+  lastPage: {fileID: 0}
+  currentSheet: {fileID: 0}
+  lastSheet: {fileID: 0}
 --- !u!114 &4077229905818808203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,39 +841,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMeshProUGUI: {fileID: 5646325880119103148}
   typingSpeed: 0.02
-  OnFinishedText:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2165296284106594883}
-        m_TargetAssemblyTypeName: SpeachBubbleUI, Assembly-CSharp
-        m_MethodName: NextButtonInteractable
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  OnLetterTyped:
+  onFinishedText:
     m_PersistentCalls:
       m_Calls: []
-  OnWordTyped:
+  onLetterTyped:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2165296284106594883}
-        m_TargetAssemblyTypeName: SpeachBubbleUI, Assembly-CSharp
-        m_MethodName: TalkAnimation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  onWordTyped:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!222 &3073291212525643217
 CanvasRenderer:
   m_ObjectHideFlags: 0

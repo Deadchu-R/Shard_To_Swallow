@@ -9,7 +9,7 @@ public class DialougeOptions : MonoBehaviour
 {
     [SerializeField] private Button[] buttons;
     [SerializeField] private TextMeshProUGUI[] buttonTexts;
-    [SerializeField] private SpeachBubbleUI speechBubbleScript;
+    [SerializeField] private SpeechBubbleUI speechBubbleScript;
     private Page[] pages;
 
 
@@ -22,7 +22,7 @@ public class DialougeOptions : MonoBehaviour
         pages = page.Pages;
         SetButtons(page);
         SetActive(true);
-        speechBubbleScript.NextButtonInteractable(false);
+        speechBubbleScript.SetButtonInteractable(speechBubbleScript.NextButton,false);
     }
 
     /// <summary>
