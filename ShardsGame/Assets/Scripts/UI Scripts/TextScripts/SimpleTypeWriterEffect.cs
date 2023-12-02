@@ -34,6 +34,8 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     private bool _isCoroutineRunning = false;
     private string _fullText;
     private StringBuilder _textBuilder = new StringBuilder();
+    private WaitForEndOfFrame _waitForEndOfFrame = new WaitForEndOfFrame();
+
 
 
 
@@ -52,6 +54,7 @@ public class SimpleTypeWriterEffect : MonoBehaviour
         textMeshProUGUI.text = "";
         _fullText = page.Text;
        if (!_isCoroutineRunning)  _typeTextCoroutine = StartCoroutine(TypeText()); // in order to prevent multiple coroutines running at the same time, will check if any coroutine is running
+ 
     }
 
     /// <summary>
@@ -104,8 +107,9 @@ public class SimpleTypeWriterEffect : MonoBehaviour
         }
         
         _isCoroutineRunning = true;
-        _textBuilder.Clear();
+        _textBuilder.Length = 0;
         int characterCount = _fullText.Length;
+
         for (int i = 0; i < characterCount; i++)
         {
             onLetterTyped?.Invoke();
@@ -118,7 +122,7 @@ public class SimpleTypeWriterEffect : MonoBehaviour
             if (IsFinishedText()) yield break;
             for (int j = 0; j < (int)(typingSpeed * 60); j++)
             {
-                yield return null;
+                yield return _waitForEndOfFrame;
             }
         }
 
