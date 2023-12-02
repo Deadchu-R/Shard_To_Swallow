@@ -197,7 +197,7 @@ public class SpeechBubbleUI : MonoBehaviour
     /// <param name="page">Dialogue Page for DialogueOptions SetDialogueOptions</param>
     public void SetDialogueOptions(DialoguePage page)
     {
-        dialogueOptionsScript.SetDialougeOptions(page);
+        dialogueOptionsScript.SetDialogueOptions(page);
     }
 
     /// <summary>
@@ -258,11 +258,9 @@ public bool isCurrentPageIndexPlusOneSmallerThanPagesLength()
     /// </summary>
     private void IsLastPage()
     {
-        if (currentPageIndex + 1 >= _pages.Length)
-        {
-            NextButton.onClick.RemoveListener(NextPage);
-            NextButton.onClick.AddListener(ClosePanel);
-        }
+        if (currentPageIndex + 1 < _pages.Length) return;
+        NextButton.onClick.RemoveListener(NextPage);
+        NextButton.onClick.AddListener(ClosePanel);
     }
 
     /// <summary>

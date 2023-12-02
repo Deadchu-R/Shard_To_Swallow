@@ -16,11 +16,9 @@ public class NPC_DATA : MonoBehaviour
   
   private void OnTriggerStay(Collider coll)
   {
-    if (coll.CompareTag("Player") && Input.GetKey(KeyCode.E) && !isInteractionStarted)
-    {
-      SetIsNpcInteractionStarted(true);
-      StartNPCAction();
-    }
+    if (!coll.CompareTag("Player") || !Input.GetKey(KeyCode.E) || isInteractionStarted) return;
+    SetIsNpcInteractionStarted(true);
+    StartNPCAction();
 
   }
   

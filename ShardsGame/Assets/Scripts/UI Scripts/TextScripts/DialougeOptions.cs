@@ -17,7 +17,7 @@ public class DialougeOptions : MonoBehaviour
     ///  will set the dialogue options according to the page: (pages) array that is passed
     /// </summary>
     /// <param name="page"></param>
-    public void SetDialougeOptions(DialoguePage page)
+    public void SetDialogueOptions(DialoguePage page)
     {
         pages = page.Pages;
         SetButtons(page);
@@ -31,11 +31,9 @@ public class DialougeOptions : MonoBehaviour
     /// <param name="page"></param>
     private void SetButtons(DialoguePage page)
     {
-        int i = 0;
-        foreach (var buttonText in buttonTexts)
+        for (int i = 0; i < buttonTexts.Length; i++)
         {
-            buttonText.text = page.Options[i];
-            i++;
+            buttonTexts[i].text = page.Options[i];
         }
     }
 
@@ -55,6 +53,12 @@ public class DialougeOptions : MonoBehaviour
     /// <param name="optionIndex"></param>
     public void UseOption(int optionIndex)
     {
+        if (optionIndex < 0 || optionIndex >= pages.Length)
+        {
+            Debug.LogError("Option index is out of bounds, seems you forgot to set the option index in the inspector");
+            return;
+        }
+        
         Sheet sheet = new Sheet(1);
         sheet.pages = new Page[1];
         sheet.pages[0] = pages[optionIndex];

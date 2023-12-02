@@ -5,7 +5,6 @@ using UnityEngine;
 public class NPC_UI_Handler : MonoBehaviour
 {
    [SerializeField] private SpeechBubbleUI speechBubble;
-   
    [SerializeField] private UI_Manager uiManager;
    private Sheet sheet;
    private NPC_DATA npcData;

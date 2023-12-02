@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Text;
 
 
 public class SimpleTypeWriterEffect : MonoBehaviour
@@ -28,8 +30,12 @@ public class SimpleTypeWriterEffect : MonoBehaviour
 
     #endregion
 
+    private Coroutine _typeTextCoroutine;
     private bool _isCoroutineRunning = false;
     private string _fullText;
+    private StringBuilder _textBuilder = new StringBuilder();
+
+
 
     /// <summary>
     ///  will set the text to the textMeshProUGUI component
@@ -37,9 +43,15 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     /// <param name="page">taking info from page.Text</param>
     public void SetText(Page page)
     {
+        if (page == null)
+        {
+            Debug.LogError("Page is null, seems you forgot to set the page in the inspector or to the Page ScriptableObject");
+            return;
+        }
+        
         textMeshProUGUI.text = "";
         _fullText = page.Text;
-        if (!_isCoroutineRunning) StartCoroutine(TypeText()); // in order to prevent multiple coroutines running at the same time, will check if any coroutine is running
+       if (!_isCoroutineRunning)  _typeTextCoroutine = StartCoroutine(TypeText()); // in order to prevent multiple coroutines running at the same time, will check if any coroutine is running
     }
 
     /// <summary>
@@ -48,9 +60,8 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     /// <returns></returns>
     private bool IsFinishedText() // will check if type-writer finished to write the text
     {
-        if (textMeshProUGUI.text == _fullText)
+        if (string.Equals(textMeshProUGUI.text, _fullText))
         {
-            //Debug.Log("finished text");
             _isCoroutineRunning = false;
             onFinishedText.Invoke();
             return true;
@@ -63,8 +74,10 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     /// </summary>
     public void StopText()
     {
+        if (!_isCoroutineRunning || _typeTextCoroutine == null) return;
         _isCoroutineRunning = false;
-        StopAllCoroutines();
+        StopCoroutine(_typeTextCoroutine);
+        _typeTextCoroutine = null;
     }
 
     /// <summary>
@@ -84,18 +97,30 @@ public class SimpleTypeWriterEffect : MonoBehaviour
     /// <returns></returns>
     private IEnumerator TypeText()
     {
-        _isCoroutineRunning = true;
-        foreach (char c in _fullText)
+        if (_isCoroutineRunning)
         {
-            onLetterTyped.Invoke();
-            if (c == ' ')
-            {
-                onWordTyped.Invoke();
-            }
-
-            textMeshProUGUI.text += c;
-            if (IsFinishedText()) yield break;
-            yield return new WaitForSeconds(typingSpeed);
+            Debug.LogWarning("Coroutine is already running.");
+            yield break;
         }
+        
+        _isCoroutineRunning = true;
+        _textBuilder.Clear();
+        int characterCount = _fullText.Length;
+        for (int i = 0; i < characterCount; i++)
+        {
+            onLetterTyped?.Invoke();
+            if (_fullText[i] == ' ')
+            {
+                onWordTyped?.Invoke();
+            }
+            _textBuilder.Append(_fullText[i]);
+            textMeshProUGUI.text = _textBuilder.ToString();
+            if (IsFinishedText()) yield break;
+            for (int j = 0; j < (int)(typingSpeed * 60); j++)
+            {
+                yield return null;
+            }
+        }
+
     }
 }

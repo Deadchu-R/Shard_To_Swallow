@@ -8,9 +8,10 @@ public class Page : ScriptableObject
  public NPC_ID NPCInfo;
  public string Text;
  public string QuestionText;
- [SerializeField] PageEvent onFinishedPage = new PageEvent();
+ [SerializeField] private PageEvent onFinishedPage = new PageEvent();
  public void FinishedPage()
  {
+  onFinishedPage.RemoveAllListeners();
   onFinishedPage.AddListener(GameObject.Find("GameManager").GetComponent<GameManager>().PageAction);
   onFinishedPage.Invoke(this);
  }
@@ -18,6 +19,7 @@ public class Page : ScriptableObject
  public virtual void PageAction(SpeechBubbleUI speechBubble)
  {
  } 
+ 
  
  public bool PageEquals(Page other)
  {
