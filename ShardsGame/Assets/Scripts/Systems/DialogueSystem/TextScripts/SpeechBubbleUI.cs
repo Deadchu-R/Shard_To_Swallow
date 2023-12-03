@@ -158,8 +158,8 @@ public class SpeechBubbleUI : MonoBehaviour
     private void SetPage(Page pageToSet)
     {
         ResetPageState();
-        currentPageIndex = Array.IndexOf(CurrentSheet.pages, pageToSet);
-        SetButtonInteractable(BackButton,currentPageIndex <= 0 && !CurrentSheet.SheetEquals(FirstSheet));
+        SetCurrentPageIndex(PageIndexSetter.CurrentPageAtSheet, pageToSet);
+        SetButtonInteractable(BackButton, FirstSheet.pages[0] != pageToSet);
         CurrentPage = pageToSet;
         PageActions(CurrentPage);
         SetNPCInfo();
@@ -269,7 +269,7 @@ public bool isCurrentPageIndexPlusOneSmallerThanPagesLength()
     private void NextPage()
     {
         SetLastPage();
-        SetCurrentPageIndex(PageMoveDirection.Next);
+        SetCurrentPageIndex(PageIndexSetter.Next);
         Page nextPage = _pages[currentPageIndex];
 
         if (!CurrentSheet.ContainsPage(nextPage)) return; // normal set page
@@ -287,7 +287,7 @@ public bool isCurrentPageIndexPlusOneSmallerThanPagesLength()
     {
         if (CurrentSheet.ContainsPage(LastPage)) // Normal Set Page
         {
-            SetCurrentPageIndex(PageMoveDirection.Previous);
+            SetCurrentPageIndex(PageIndexSetter.Previous);
             SetPage(LastPage);
             NextButton.onClick.RemoveListener(ClosePanel);
         }
@@ -311,15 +311,21 @@ public bool isCurrentPageIndexPlusOneSmallerThanPagesLength()
         NextButton.onClick.AddListener(NextPage);
     }
 
-    private void SetCurrentPageIndex(PageMoveDirection direction)
+    private void SetCurrentPageIndex(PageIndexSetter setter, Page page = null)
     {
-        switch (direction)
+        switch (setter)
         {
-            case PageMoveDirection.Next:
+            case PageIndexSetter.Next:
                 if (currentPageIndex < _pages.Length - 1) currentPageIndex++;
                 break;
-            case PageMoveDirection.Previous:
+            case PageIndexSetter.Previous:
                 if (currentPageIndex > 0) currentPageIndex--;
+                break;
+            case PageIndexSetter.CurrentPageAtSheet:
+                currentPageIndex = Array.IndexOf(CurrentSheet.pages, page);
+                break;
+            case PageIndexSetter.Reset:
+                currentPageIndex = 0;
                 break;
         }
     }
@@ -330,10 +336,10 @@ public bool isCurrentPageIndexPlusOneSmallerThanPagesLength()
     /// </summary>
     private void ClosePanel()
     {
-        ResetBubble();
         CurrentPage.FinishedPage();
         gameObject.SetActive(false);
         onEndSpeech.Invoke();
+        ResetBubble();
     }
 
     /// <summary>
@@ -341,10 +347,26 @@ public bool isCurrentPageIndexPlusOneSmallerThanPagesLength()
     /// </summary>
     private void ResetBubble()
     {
-        if (_currentNpcData != null) _currentNpcData.SetIsNpcInteractionStarted(false);
-        currentPageIndex = 0;
+        ResetNPCData();
+        ResetSheet();
+        ResetVariables();
+        BackButton.onClick.RemoveAllListeners();
     }
-
+    private void ResetNPCData()
+    {
+        if (_currentNpcData != null) _currentNpcData.SetIsNpcInteractionStarted(false);
+        currentSheet = null;
+    }
+private void ResetVariables()
+    {
+        
+        SetCurrentPageIndex(PageIndexSetter.Reset);
+        lastPageIndex = 0;
+        CurrentPage = null;
+        LastPage = null;
+        LastSheet = null;
+        firstSheet = null;
+    }
     private void ResetSheet()
     {
         CurrentSheet = null;
@@ -352,8 +374,11 @@ public bool isCurrentPageIndexPlusOneSmallerThanPagesLength()
         _isDialogueActive = false;
     }
 }
-public enum PageMoveDirection
+public enum PageIndexSetter
 {
     Next,
-    Previous
+    Previous,
+    CurrentPageAtSheet,
+    Reset
+    
 }

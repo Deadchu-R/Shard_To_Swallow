@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class DialougeOptions : MonoBehaviour
 {
     [SerializeField] private Button[] buttons;
-    [SerializeField] private TextMeshProUGUI[] buttonTexts;
-    [SerializeField] private SpeechBubbleUI speechBubbleScript;
+    [SerializeField] private SpeechBubbleUI speechBubbleScript; 
+    private TextMeshProUGUI[] buttonTexts;
     private Page[] pages;
 
+    private void Awake()
+    {
+    
+    }
+    
 
     /// <summary>
     ///  will set the dialogue options according to the page: (pages) array that is passed
@@ -31,10 +36,26 @@ public class DialougeOptions : MonoBehaviour
     /// <param name="page"></param>
     private void SetButtons(DialoguePage page)
     {
-        for (int i = 0; i < buttonTexts.Length; i++)
+    
+        //disabling all the buttons
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].gameObject.SetActive(false);
+        }
+     
+        // adding the buttons texts acording to how much buttons added in the inspector
+        buttonTexts = new TextMeshProUGUI[buttons.Length];
+        for (int i = 0; i < buttons.Length; i++) 
+        {
+            buttonTexts[i] = buttons[i].GetComponentInChildren<TextMeshProUGUI>();
+        }
+        // setting the buttons texts according to the page options (which are texts)
+        for (int i = 0; i < page.Options.Length ; i++)
         {
             buttonTexts[i].text = page.Options[i];
+            buttons[i].gameObject.SetActive(true); // enabling the buttons that are needed
         }
+  
     }
 
 

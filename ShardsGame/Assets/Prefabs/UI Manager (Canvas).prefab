@@ -825,8 +825,10 @@ MonoBehaviour:
   LastPageIndex: 0
   currentPage: {fileID: 0}
   lastPage: {fileID: 0}
+  firstSheet: {fileID: 0}
   currentSheet: {fileID: 0}
   lastSheet: {fileID: 0}
+  _currentNpcData: {fileID: 0}
 --- !u!114 &4077229905818808203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,7 +999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &986392568005421719
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1465,7 +1467,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153add53091b45e4eb3d85903ab8f10b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonTexts: []
+  buttons:
+  - {fileID: 2965570834656699212}
+  - {fileID: 2683733932203997303}
+  - {fileID: 6527707477815873407}
   speechBubbleScript: {fileID: 2165296284106594883}
 --- !u!114 &1973910293536206166
 MonoBehaviour:
@@ -2155,7 +2160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9114090857468141320
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2558,7 +2563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &760493959126999714
 RectTransform:
   m_ObjectHideFlags: 0
