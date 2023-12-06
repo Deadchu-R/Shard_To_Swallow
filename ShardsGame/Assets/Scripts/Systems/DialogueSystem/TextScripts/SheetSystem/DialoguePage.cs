@@ -16,6 +16,5 @@ public class DialoguePage : Page
     {
         speechBubbleUI.SetDialogueOptions(this);
         speechBubbleUI.SetButtonInteractable(speechBubbleUI.NextButton,false); // At DialoguePage the nextButton will be disabled
-       // if (speechBubbleUI.CurrentPageIndex > 0 || speechBubbleUI.LastSheet != null) speechBubbleUI.SetButtonInteractable(speechBubbleUI.BackButton,true);
     }
 }

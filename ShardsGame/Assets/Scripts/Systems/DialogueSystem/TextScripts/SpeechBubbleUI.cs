@@ -306,7 +306,6 @@ public bool isCurrentPageIndexPlusOneSmallerThanPagesLength()
 
     private void ResetNextButtonListeners()
     {
-    
         NextButton.onClick.RemoveAllListeners();
         NextButton.onClick.AddListener(NextPage);
     }
@@ -359,7 +358,6 @@ public bool isCurrentPageIndexPlusOneSmallerThanPagesLength()
     }
 private void ResetVariables()
     {
-        
         SetCurrentPageIndex(PageIndexSetter.Reset);
         lastPageIndex = 0;
         CurrentPage = null;
