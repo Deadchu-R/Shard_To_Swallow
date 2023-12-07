@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 255fc9c299992e547b2ca5b0e395825d, type: 3}
-  m_Name: NPC3_LV1_1STPage
+  m_Name: NPC7_LV1_Reply2
   m_EditorClassIdentifier: 
-  NPCInfo: {fileID: 11400000, guid: 349e1287b241aee448d1dc984f9da19b, type: 2}
-  Text: Haven't seen you in a while! Me? Same old same old
+  NPCInfo: {fileID: 11400000, guid: 1ab2a63833d11e94d8fcd4d1d252d815, type: 2}
+  Text: 'Huh? You know nothing interesting ever happens here, though I personally
+    like.it that way. '
   QuestionText: 
   onFinishedPage:
     m_PersistentCalls:
       m_Calls: []
+  test: 0

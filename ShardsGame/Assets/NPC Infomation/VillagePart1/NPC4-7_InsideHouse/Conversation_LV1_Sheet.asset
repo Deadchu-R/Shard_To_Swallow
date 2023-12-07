@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23a581014097eb54cabd322f440b0e84, type: 3}
+  m_Name: Conversation_LV1_Sheet
+  m_EditorClassIdentifier: 
+  pages:
+  - {fileID: 11400000, guid: 642f96dbf4f3af64e93fa9736ffc7a5c, type: 2}
+  - {fileID: 11400000, guid: 85329213c45b17b45b3474c2bd569ef5, type: 2}
+  - {fileID: 11400000, guid: 47a6b9fb1d53b3d40bffa43c718b8c12, type: 2}
+  - {fileID: 11400000, guid: 57ab8a53c2bd5754fb8f90edd4d43988, type: 2}

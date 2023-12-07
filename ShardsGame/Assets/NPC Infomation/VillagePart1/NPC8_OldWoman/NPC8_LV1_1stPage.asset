@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 255fc9c299992e547b2ca5b0e395825d, type: 3}
-  m_Name: NPC3_LV1_1STPage
+  m_Name: NPC8_LV1_1stPage
   m_EditorClassIdentifier: 
-  NPCInfo: {fileID: 11400000, guid: 349e1287b241aee448d1dc984f9da19b, type: 2}
-  Text: Haven't seen you in a while! Me? Same old same old
+  NPCInfo: {fileID: 11400000, guid: 76a5786b6c348cf4ca037cb7895c67c2, type: 2}
+  Text: "I love sitting here with my\u2026 Who was it again? "
   QuestionText: 
   onFinishedPage:
     m_PersistentCalls:

@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 255fc9c299992e547b2ca5b0e395825d, type: 3}
-  m_Name: FatherOP1
+  m_Name: NPC9_LV1_1stPage
   m_EditorClassIdentifier: 
-  NPCInfo: {fileID: 11400000, guid: 1ab2a63833d11e94d8fcd4d1d252d815, type: 2}
-  Text: 'He? I''m not sure who you''re talking about. '
+  NPCInfo: {fileID: 11400000, guid: 76fb41b94f4bdde42a4f4d3e43c67877, type: 2}
+  Text: 'I made a new friend! '
   QuestionText: 
   onFinishedPage:
     m_PersistentCalls:
       m_Calls: []
-  test: 0
