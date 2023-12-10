@@ -20,7 +20,7 @@ public class NPC_UI_Handler : MonoBehaviour
       npcData = npc;
       uiManager.ClosePanel(0);
       this.sheet = sheet;
-      uiManager.OpenPanel(2);
+      uiManager.OpenPanel(UI_Manager.PanelEnum.Speech_Bubble_Panel);
       StartSpeechBubble();
    }
 

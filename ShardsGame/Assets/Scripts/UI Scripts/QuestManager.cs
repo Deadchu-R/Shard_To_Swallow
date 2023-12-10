@@ -1,36 +1,38 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI questText;
     [SerializeField] private TextMeshProUGUI questText2;
     [SerializeField] private FontStyles fontStyle;
-    private string[] questSequence;
-    private int questIndex = 0;
-    private bool isQuestSequenceActive = false;
+    private string[] _questSequence;
+    private int questIndex;
+    private bool _isQuestSequenceActive;
 
 
     public void SetQuestSequence(string[] questSequence)
     {
         ResetQuestSequence();
-        this.questSequence = questSequence;
+        _questSequence = questSequence;
+        foreach (var quest in _questSequence)
+        {
+            Debug.Log(quest);
+        }
+        StartQuestSequence();
     }
 
     private void StartQuestSequence()
     {
+        if (gameObject.activeSelf == false) gameObject.SetActive(true);
         SetQuestText();
         questText.gameObject.SetActive(true);
-        isQuestSequenceActive = true;
+        _isQuestSequenceActive = true;
     }
 
     public void NextQuest()
     {
-        if (!isQuestSequenceActive) return;
+        if (!_isQuestSequenceActive) return;
         questIndex++;
         if (questIndex >= 2)
         {
@@ -49,10 +51,10 @@ public class QuestManager : MonoBehaviour
 
     private void SetQuestText()
     {
-        questText.text = questSequence[questIndex];
-        if (questIndex < questSequence.Length - 1)
+        questText.text = _questSequence[questIndex];
+        if (questIndex < _questSequence.Length - 1)
         {
-            questText2.text = questSequence[questIndex + 1];
+            questText2.text = _questSequence[questIndex + 1];
         }
     }
 
@@ -61,7 +63,7 @@ public class QuestManager : MonoBehaviour
         questText.fontStyle = fontStyle;
         questText.gameObject.SetActive(false);
         questText2.gameObject.SetActive(false);
-        questIndex = 0;
-        isQuestSequenceActive = false;
+        questIndex = 1;
+        _isQuestSequenceActive = false;
     }
 }

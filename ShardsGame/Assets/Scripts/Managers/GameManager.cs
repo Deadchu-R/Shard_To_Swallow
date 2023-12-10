@@ -13,8 +13,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // This is a singleton pattern. It ensures that there is only one instance of this class.
-        // If there is already an instance of this class, destroy this one.
+        CreateSingleTonInstance();
+    }
+
+    private void CreateSingleTonInstance()
+    {
         if (Instance != null)
         {
             Destroy(gameObject);
@@ -24,6 +27,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        
     }
 
     public void GhostClickToHub()
